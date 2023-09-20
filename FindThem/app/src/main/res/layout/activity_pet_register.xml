@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="@dimen/activity_vertical_margin"
+    tools:context=".Activities.PetRegisterActivity">
+
+    <TextView
+        android:id="@+id/titlePet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Datos Mascota"
+        style="@style/TitleStyle"
+        />
+    <TextView
+        android:id="@+id/smallTitlePet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titlePet"
+        style="@style/SmallMessage"
+        android:text="Ingrese Los Datos de su Mascota"
+        />
+
+    <EditText
+        android:id="@+id/edNamePet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/smallTitlePet"
+        android:hint="Nombre"
+        style="@style/EditTextStyle"
+        />
+
+    <!--<androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />-->
+
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edNamePet"
+        android:layout_marginHorizontal="100dp"
+        android:prompt="@string/app_name"
+        />
+
+    <CheckBox
+        android:id="@+id/chk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerGender"
+        android:text="Femenino"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/black"
+        android:background="@android:color/holo_green_light"
+        />
+    <Button
+        android:id="@+id/btnPresionarPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingresar Datos"
+        style="@style/Btn"
+        android:onClick="btnChekPet"/>
+</RelativeLayout>
