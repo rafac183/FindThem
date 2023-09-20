@@ -1,0 +1,6 @@
+#Para No Ignorar se usa esto '!' antes de lo que no va a ignorar
+#Usa Paginas Externas para las Imagenes
+*.jpg
+*.png
+*.jpeg
+*.ico
