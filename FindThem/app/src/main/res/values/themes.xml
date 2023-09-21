@@ -13,11 +13,13 @@
         <item name="android:statusBarColor">@color/my_primary</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Base.Theme.FindThem.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="Base.Theme.FindThem.AppBarOverlay"
-        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Base.Theme.FindThem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Base.Theme.FindThem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

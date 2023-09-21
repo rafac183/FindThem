@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="@string/menu_home" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/menu_registrations">
+            <menu>
+                <item
+                    android:id="@+id/nav_persons"
+                    android:icon="@drawable/group_of_people_icon"
+                    android:title="@string/menu_persons" />
+                <item
+                    android:id="@+id/nav_pets"
+                    android:icon="@drawable/pets_icon"
+                    android:title="@string/menu_pets" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/menu_profile">
+            <menu>
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/person_icon"
+                    android:title="@string/menu_profile"
+                    />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="@string/menu_logout"
+                    />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:title="@string/menu_settings">
+            <menu>
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/settings_icon"
+                    android:title="@string/menu_settings"
+                    />
+            </menu>
+        </item>
+    </group>
+</menu>

@@ -13,8 +13,10 @@
         android:theme="@style/Base.Theme.FindThem"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.LoginActivity"
-            android:exported="true" >
+            android:name=".Activities.NavigationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Base.Theme.FindThem.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,17 +24,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.RegisterActivity"
-            android:exported="false" >
+            android:name=".Activities.LoginActivity"
+            android:exported="false">
+
         </activity>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:exported="false"/>
         <activity
             android:name=".Activities.PetRegisterActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".Activities.HomeActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false"/>
     </application>
 
 </manifest>
