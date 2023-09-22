@@ -25,8 +25,6 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_register);
 
-        seleccionarChk = (CheckBox) findViewById(R.id.chk);
-
         Spinner spin = (Spinner) findViewById(R.id.spinnerGender);
         spin.setOnItemSelectedListener(this);
 

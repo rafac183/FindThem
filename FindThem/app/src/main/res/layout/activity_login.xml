@@ -55,10 +55,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome"
-                android:textColor="@color/my_primary"
-                android:textSize="32sp"
-                android:textStyle="bold"/>
+                android:text="Welcome Back"
+                style="@style/Title"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,14 +71,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:alpha="0.7"
-                android:textStyle="bold"/>
+                style="@style/SmallTitle"/>
 
             <EditText
                 android:id="@+id/textUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="textAutoComplete"
                 android:drawableEnd="@drawable/done_icon"/>
 
             <View
@@ -90,8 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password"
-                android:alpha="0.7"
-                android:textStyle="bold"/>
+                style="@style/SmallTitle"/>
 
             <EditText
                 android:id="@+id/textPass"

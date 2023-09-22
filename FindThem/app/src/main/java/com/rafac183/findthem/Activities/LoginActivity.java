@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!uName.equals("admin") && !uPass.equals("admin123")) {
             Snackbar.make(v, "Datos Incorrectos", Snackbar.LENGTH_SHORT).show();
         } else {
-            Intent myIntent = new Intent(LoginActivity.this, NavigationActivity.class);
+            Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
             startActivity(myIntent);
         }
         loginModel.setuName(uName);
@@ -44,5 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     public void DontHaveAccount(View v){
         Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(myIntent);
+    }
+
+    public void SendProfile() {
+
     }
 }

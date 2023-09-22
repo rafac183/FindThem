@@ -3,66 +3,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin"
-    android:paddingVertical="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg"
     tools:context=".Activities.PetRegisterActivity">
 
-    <TextView
-        android:id="@+id/titlePet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Datos Mascota"
-        style="@style/TitleStyle"
-        />
-    <TextView
-        android:id="@+id/smallTitlePet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titlePet"
-        style="@style/SmallMessage"
-        android:text="Ingrese Los Datos de su Mascota"
-        />
-
-    <EditText
-        android:id="@+id/edNamePet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/smallTitlePet"
-        android:hint="Nombre"
-        style="@style/EditTextStyle"
-        />
-
-    <!--<androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />-->
+        android:background="@color/my_primary"
+        android:alpha="0.7"/>
 
-    <Spinner
-        android:id="@+id/spinnerGender"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edNamePet"
-        android:layout_marginHorizontal="100dp"
-        android:prompt="@string/app_name"
-        />
-
-    <CheckBox
-        android:id="@+id/chk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerGender"
-        android:text="Femenino"
-        android:textSize="20dp"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/black"
-        android:background="@android:color/holo_green_light"
-        />
-    <Button
-        android:id="@+id/btnPresionarPet"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingresar Datos"
-        style="@style/Btn"
-        android:onClick="btnChekPet"/>
+        app:cardCornerRadius="28dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="28dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pet Information"
+                style="@style/Title"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SmallMessage"
+                android:text="Please enter your pet's information"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                style="@style/SmallTitle"
+                />
+
+            <EditText
+                android:id="@+id/edNamePet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textAutoComplete"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                style="@style/SmallTitle"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:prompt="@string/app_name"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Code"
+                style="@style/SmallTitle"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/ingresar_datos"
+        android:layout_marginHorizontal="28dp"
+        android:layout_alignParentBottom="true"
+        style="@style/MaterialBtn"/>
 </RelativeLayout>

@@ -10,7 +10,7 @@ public class PetsViewModel extends ViewModel {
 
     public PetsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is registered pets fragment");
     }
 
     public LiveData<String> getText() {

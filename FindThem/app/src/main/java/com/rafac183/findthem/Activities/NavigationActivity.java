@@ -1,6 +1,8 @@
 package com.rafac183.findthem.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationBinding binding;
+    private NavigationView navigationView;
     private LoginModel loginModel = new LoginModel();
     private TextView userName;
 
@@ -33,7 +36,17 @@ public class NavigationActivity extends AppCompatActivity {
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        navigationView = findViewById(R.id.nav_view);
 
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+                return true;
+            }
+        });
 
         setSupportActionBar(binding.appBarNavigation.toolbar);
         binding.appBarNavigation.fab.setOnClickListener(new View.OnClickListener() {

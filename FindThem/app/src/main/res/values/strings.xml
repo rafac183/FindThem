@@ -15,4 +15,5 @@
     <string name="menu_registrations">Registrations</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
+    <string name="ingresar_datos">Ingresar Datos</string>
 </resources>
