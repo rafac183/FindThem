@@ -15,4 +15,7 @@
     <style name="MaterialBtn">
         <item name="cornerRadius">20dp</item>
     </style>
+    <style name="BarColor">
+        <item name="android:statusBarColor">@color/my_primary</item>
+    </style>
 </resources>

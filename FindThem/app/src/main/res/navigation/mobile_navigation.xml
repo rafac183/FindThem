@@ -34,4 +34,16 @@
         android:name="com.rafac183.findthem.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.rafac183.findthem.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_rate_us"
+        android:name="com.rafac183.findthem.ui.rate_us.RateUsFragment"
+        android:label="@string/menu_rate_us"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

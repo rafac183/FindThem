@@ -39,7 +39,7 @@ public class SplashActivity extends Activity {
         };
 
 
-        tiempo.schedule(tarea,0, 100);
+        tiempo.schedule(tarea,0, 50);
 
 
     }
