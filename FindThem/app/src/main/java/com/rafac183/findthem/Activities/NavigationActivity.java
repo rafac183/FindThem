@@ -2,17 +2,10 @@ package com.rafac183.findthem.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
-import android.widget.TextView;
-import android.widget.Toolbar;
-
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -22,7 +15,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.rafac183.findthem.Model.LoginModel;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
 
