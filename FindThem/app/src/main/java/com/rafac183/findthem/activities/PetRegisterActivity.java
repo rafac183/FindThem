@@ -1,10 +1,9 @@
-package com.rafac183.findthem.Activities;
+package com.rafac183.findthem.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -14,24 +13,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafac183.findthem.R;
+import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
 
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private CheckBox seleccionarChk;
+    private ActivityPetRegisterBinding binding;
     String[] gender = {"Masculino", "Femenino"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_register);
+        binding = ActivityPetRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Spinner spin = (Spinner) findViewById(R.id.spinnerGender);
-        spin.setOnItemSelectedListener(this);
+        binding.spinnerGender.setOnItemSelectedListener(this);
 
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, gender);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spin.setAdapter(aa);
+        binding.spinnerGender.setAdapter(aa);
     }
 
     @Override
@@ -44,9 +44,9 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void btnChekPet(View v) {
+    /*public void btnChekPet(View v) {
         String mensaje;
-        if (seleccionarChk.isChecked() == true) {
+        if (binding.isChecked() == true) {
             Intent myIntent = new Intent(PetRegisterActivity.this, HomeActivity.class);
             startActivity(myIntent);
         } else {
@@ -56,5 +56,5 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
             tost.show();
         }
 
-    }
+    }*/
 }

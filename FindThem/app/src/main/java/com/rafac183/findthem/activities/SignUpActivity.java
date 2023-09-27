@@ -1,4 +1,4 @@
-package com.rafac183.findthem.Activities;
+package com.rafac183.findthem.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,17 +11,19 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.rafac183.findthem.R;
+import com.rafac183.findthem.databinding.ActivitySignUpBinding;
 
-public class RegisterActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private CheckBox seleccionarChk;
+    private ActivitySignUpBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_primary));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 
     public void BtnSignIn(View v) {
@@ -39,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void HaveAccount(View v){
-        Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(myIntent);
     }
 }

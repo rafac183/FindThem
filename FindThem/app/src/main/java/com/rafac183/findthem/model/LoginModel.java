@@ -1,4 +1,4 @@
-package com.rafac183.findthem.Model;
+package com.rafac183.findthem.model;
 
 public class LoginModel {
     protected String uName;

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rafac183.findthem.Model.LoginModel;
+import com.rafac183.findthem.model.LoginModel;
 
 public class RateUsViewModel extends ViewModel {
     private final MutableLiveData<String> mText;

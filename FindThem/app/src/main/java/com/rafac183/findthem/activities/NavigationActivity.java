@@ -1,4 +1,4 @@
-package com.rafac183.findthem.Activities;
+package com.rafac183.findthem.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

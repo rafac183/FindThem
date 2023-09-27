@@ -18,4 +18,8 @@
     <style name="BarColor">
         <item name="android:statusBarColor">@color/my_primary</item>
     </style>
+    <style name="TitleCardView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24dp</item>
+    </style>
 </resources>
