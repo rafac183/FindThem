@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment implements FindInterface {
         binding.recyclerFragmentHome.setHasFixedSize(true); //Extra
         binding.recyclerFragmentHome.setItemAnimator(new DefaultItemAnimator());//Extra
         binding.recyclerFragmentHome.setLayoutManager(manager);
+        
         binding.recyclerFragmentHome.setAdapter(new FindAdapter(MyData.getHomeList(), this)); //tambien puede ser esto superHero -> onClickCardView(superHero) o esto this::onClickCardView
     }
 
