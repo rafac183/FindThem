@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafac183.findthem.R;
-import com.rafac183.findthem.model.HomeModel;
+import com.rafac183.findthem.ui.home.HomeModel;
 
 import java.util.ArrayList;
 

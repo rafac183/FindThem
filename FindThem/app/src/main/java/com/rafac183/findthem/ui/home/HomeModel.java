@@ -1,4 +1,4 @@
-package com.rafac183.findthem.model;
+package com.rafac183.findthem.ui.home;
 
 public class HomeModel {
     private String name;

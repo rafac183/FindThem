@@ -1,16 +1,12 @@
 package com.rafac183.findthem.adapter;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.CardViewHomeBinding;
-import com.rafac183.findthem.model.HomeModel;
-import com.rafac183.findthem.ui.home.HomeViewModel;
+import com.rafac183.findthem.ui.home.HomeModel;
 
 public class FindViewHolder extends RecyclerView.ViewHolder {
 

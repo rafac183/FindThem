@@ -17,14 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.rafac183.findthem.adapter.FindAdapter;
 import com.rafac183.findthem.adapter.FindInterface;
 import com.rafac183.findthem.databinding.FragmentHomeBinding;
-import com.rafac183.findthem.model.HomeModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements FindInterface {
 
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        //HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); esto se trae la lista
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -43,7 +45,6 @@ public class HomeFragment extends Fragment implements FindInterface {
 
     public void initRecyclerView(){
         LinearLayoutManager manager = new GridLayoutManager(binding.recyclerFragmentHome.getContext(), 2); //Con esto puedo agregar un numero de filas especificas envez de 1
-        //LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerFragmentHome.getContext());
         DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentHome.getContext(), manager.getOrientation());
         binding.recyclerFragmentHome.setHasFixedSize(true); //Extra
         binding.recyclerFragmentHome.setItemAnimator(new DefaultItemAnimator());//Extra
@@ -54,6 +55,6 @@ public class HomeFragment extends Fragment implements FindInterface {
 
     @Override
     public void onClickListener(HomeModel homeModel) {
-        Toast.makeText(binding.recyclerFragmentHome.getContext(), "Hola", Toast.LENGTH_SHORT).show();
+        Toast.makeText(binding.recyclerFragmentHome.getContext(), homeModel.getName(), Toast.LENGTH_SHORT).show();
     }
 }

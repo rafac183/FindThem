@@ -1,7 +1,5 @@
 package com.rafac183.findthem.ui.home;
 
-import com.rafac183.findthem.model.HomeModel;
-
 import java.util.ArrayList;
 
 public class MyData {
