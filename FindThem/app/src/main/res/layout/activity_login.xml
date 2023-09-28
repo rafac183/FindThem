@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     tools:context=".activities.LoginActivity"
     style="@style/BarColor">
 
@@ -145,20 +145,20 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/ivFace"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/facebook"/>
+                    android:layout_margin="12dp"/>
                 <ImageView
+                    android:id="@+id/ivGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/github"/>
+                    android:layout_margin="12dp"/>
                 <ImageView
+                    android:id="@+id/ivTw"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/twitter"/>
+                    android:layout_margin="12dp"/>
 
 
             </LinearLayout>

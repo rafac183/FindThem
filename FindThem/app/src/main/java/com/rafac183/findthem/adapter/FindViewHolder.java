@@ -21,6 +21,6 @@ public class FindViewHolder extends RecyclerView.ViewHolder {
         binding.textViewDescription.setText(home.getDescription());
         Glide.with(binding.imageViewHome.getContext()).load(home.getImage()).into(binding.imageViewHome);
 
-        binding.cardViewHome.setOnClickListener(v -> onclick.onClickListener(home));
+        binding.cardViewHome.setOnClickListener(v -> onclick.onCLickCardView(home));
     }
 }

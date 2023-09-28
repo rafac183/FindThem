@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.widget.TextView;
+
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,18 +19,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
+import com.rafac183.findthem.ui.home.HomeFragment;
 
 public class NavigationActivity extends AppCompatActivity {
 
     /*Variables*/
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationBinding binding;
+    private HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /*--------------Methods------------*/
+        MenuLogOut();
+        getUserName();
 
         /*--------------Toolbar------------*/
         setSupportActionBar(binding.appBarNavigation.toolbar);
@@ -51,16 +58,7 @@ public class NavigationActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        /*--------------LogOut-------------*/
-        Menu menu = binding.navView.getMenu();
-        menu.findItem(R.id.nav_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
-                startActivity(myIntent);
-                return true;
-            }
-        });
+
     }
 
     @Override
@@ -84,6 +82,26 @@ public class NavigationActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void MenuLogOut(){
+        /*--------------LogOut-------------*/
+        Menu menu = binding.navView.getMenu();
+        menu.findItem(R.id.nav_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+                finish();
+                return true;
+            }
+        });
+    }
+
+    public void getUserName(){
+        String username = getIntent().getStringExtra("user");
+        TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
+        tvUsername.setText(username);
     }
 }
 

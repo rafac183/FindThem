@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rafac183.findthem.databinding.FragmentPersonsBinding;
 
 public class PersonsFragment extends Fragment {
@@ -26,6 +27,14 @@ public class PersonsFragment extends Fragment {
 
         final TextView textView = binding.textGallery;
         personsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         return root;
     }
 

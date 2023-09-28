@@ -13,8 +13,8 @@ import com.rafac183.findthem.ui.home.HomeModel;
 import java.util.ArrayList;
 
 public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
-    private ArrayList<HomeModel> homeList;
-    private FindInterface onClickListener;
+    private final ArrayList<HomeModel> homeList;
+    private final FindInterface onClickListener;
 
     public FindAdapter(ArrayList<HomeModel> homeList, FindInterface onClickListener) {
         this.homeList = homeList;

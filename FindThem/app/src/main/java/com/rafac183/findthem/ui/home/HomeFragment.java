@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -26,14 +27,17 @@ public class HomeFragment extends Fragment implements FindInterface {
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); esto se trae la lista
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); //esto se trae la lista
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initRecyclerView();
 
-        //final TextView textView = binding.textHome;
-        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        homeViewModel.getHomeData().observe(getViewLifecycleOwner(), homeList -> {
+            binding.recyclerFragmentHome.setAdapter(new FindAdapter(homeList, HomeFragment.this)); //tambien puede ser esto superHero -> onClickCardView(superHero) o esto this::onClickCardView
+
+        });
+
         return root;
     }
 
@@ -49,13 +53,11 @@ public class HomeFragment extends Fragment implements FindInterface {
         binding.recyclerFragmentHome.setHasFixedSize(true); //Extra
         binding.recyclerFragmentHome.setItemAnimator(new DefaultItemAnimator());//Extra
         binding.recyclerFragmentHome.setLayoutManager(manager);
-        
-        binding.recyclerFragmentHome.setAdapter(new FindAdapter(MyData.getHomeList(), this)); //tambien puede ser esto superHero -> onClickCardView(superHero) o esto this::onClickCardView
     }
 
 
     @Override
-    public void onClickListener(HomeModel homeModel) {
+    public void onCLickCardView(HomeModel homeModel) {
         Toast.makeText(binding.recyclerFragmentHome.getContext(), homeModel.getName(), Toast.LENGTH_SHORT).show();
     }
 }

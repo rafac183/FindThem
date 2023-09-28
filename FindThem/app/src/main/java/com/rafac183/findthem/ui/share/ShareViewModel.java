@@ -4,11 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rafac183.findthem.model.LoginModel;
-
 public class ShareViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
-    private final LoginModel loginModel = new LoginModel();
 
     public ShareViewModel() {
         mText = new MutableLiveData<>();
