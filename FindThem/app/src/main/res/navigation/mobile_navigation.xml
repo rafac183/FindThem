@@ -46,4 +46,10 @@
         android:name="com.rafac183.findthem.ui.rate_us.RateUsFragment"
         android:label="@string/menu_rate_us"
         tools:layout="@layout/fragment_profile" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_otherFragment"
+        app:destination="@id/nav_pets"
+        app:popUpTo="@id/homeFragment"
+        app:popUpToInclusive="true" />
 </navigation>

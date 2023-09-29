@@ -54,9 +54,14 @@ public class NavigationActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_persons, R.id.nav_pets, R.id.nav_profile, R.id.nav_share, R.id.nav_rate_us)//Si no lo coloco aqui no podre abrir otra vez la pestaña
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
 
 
     }
