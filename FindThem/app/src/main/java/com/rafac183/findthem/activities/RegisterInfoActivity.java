@@ -2,10 +2,12 @@ package com.rafac183.findthem.activities;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -19,6 +21,8 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.my_primary));
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

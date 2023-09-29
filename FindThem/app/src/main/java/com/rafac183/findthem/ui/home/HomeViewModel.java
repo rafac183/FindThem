@@ -8,14 +8,15 @@ import java.util.ArrayList;
 
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<ArrayList<HomeModel>> homeData = new MutableLiveData<>();
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        // Obtener datos de MyData y almacenarlos en homeData
+        ArrayList<HomeModel> data = HomeData.getHomeList();
+        homeData.setValue(data);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<ArrayList<HomeModel>> getHomeData() {
+        return homeData;
     }
 }

@@ -8,16 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafac183.findthem.R;
-import com.rafac183.findthem.ui.home.HomeModel;
-import com.rafac183.findthem.ui.registered_persons.PersonsModel;
+import com.rafac183.findthem.ui.registered_persons.PeopleModel;
 
 import java.util.ArrayList;
 
 public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
-    private final ArrayList<PersonsModel> personsList;
+    private final ArrayList<PeopleModel> personsList;
     private final FindInterface onClickListener;
 
-    public FindAdapter(ArrayList<PersonsModel> personsList, FindInterface onClickListener) {
+    public FindAdapter(ArrayList<PeopleModel> personsList, FindInterface onClickListener) {
         this.personsList = personsList;
         this.onClickListener = onClickListener;
     }
@@ -31,8 +30,8 @@ public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FindViewHolder holder, int position) {
-        PersonsModel personsModel = personsList.get(position);
-        holder.RenderHome(personsModel, onClickListener);
+        PeopleModel peopleModel = personsList.get(position);
+        holder.RenderHome(peopleModel, onClickListener);
     }
 
     @Override

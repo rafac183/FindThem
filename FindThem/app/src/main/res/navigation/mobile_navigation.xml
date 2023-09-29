@@ -13,21 +13,15 @@
 
     <fragment
         android:id="@+id/nav_persons"
-        android:name="com.rafac183.findthem.ui.registered_persons.PersonsFragment"
+        android:name="com.rafac183.findthem.ui.registered_persons.PeopleFragment"
         android:label="@string/menu_persons"
-        tools:layout="@layout/fragment_persons" />
+        tools:layout="@layout/fragment_people" />
 
     <fragment
         android:id="@+id/nav_pets"
         android:name="com.rafac183.findthem.ui.registered_pets.PetsFragment"
         android:label="@string/menu_pets"
         tools:layout="@layout/fragment_pets" />
-
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.rafac183.findthem.ui.settings.SettingsFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_profile"
