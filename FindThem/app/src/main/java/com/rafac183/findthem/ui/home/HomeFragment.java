@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,36 +18,41 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.activities.NavigationActivity;
 import com.rafac183.findthem.adapter.FindAdapter;
 import com.rafac183.findthem.adapter.FindInterface;
 import com.rafac183.findthem.databinding.FragmentHomeBinding;
+import com.rafac183.findthem.databinding.FragmentPersonsBinding;
 import com.rafac183.findthem.ui.profile.ProfileFragment;
+import com.rafac183.findthem.ui.registered_persons.PersonsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements FindInterface {
+public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); //esto se trae la lista
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        HomeViewModel homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        final TextView textView = binding.textGallery;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        if (binding.recyclerFragmentHome.getAdapter() == null || binding.recyclerFragmentHome.getAdapter().getItemCount() == 0) {
-            initRecyclerView();
-            homeViewModel.getHomeData().observe(getViewLifecycleOwner(), homeList -> {
-                // Actualiza el RecyclerView con los nuevos datos
-                binding.recyclerFragmentHome.setAdapter(new FindAdapter(homeList, HomeFragment.this));
-            });
-        }
-
-
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         return root;
     }
 
@@ -54,43 +60,6 @@ public class HomeFragment extends Fragment implements FindInterface {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    public void initRecyclerView(){
-        LinearLayoutManager manager = new GridLayoutManager(binding.recyclerFragmentHome.getContext(), 2); //Con esto puedo agregar un numero de filas especificas envez de 1
-        DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentHome.getContext(), manager.getOrientation());
-        binding.recyclerFragmentHome.setHasFixedSize(true); //Extra
-        binding.recyclerFragmentHome.setItemAnimator(new DefaultItemAnimator());//Extra
-        binding.recyclerFragmentHome.setLayoutManager(manager);
-    }
-
-
-    @Override
-    public void onCLickCardView(HomeModel homeModel) {
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation);
-        switch (homeModel.getName()) {
-            case "Registered Persons":
-                navController.navigate(R.id.nav_persons);
-                break;
-            case "Registered Pets":
-                navController.navigate(R.id.nav_pets);
-                break;
-            case "Profile":
-                navController.navigate(R.id.nav_profile);
-                break;
-            case "Rate Us":
-                navController.navigate(R.id.nav_rate_us);
-                break;
-            case "Share":
-                navController.navigate(R.id.nav_share);
-                break;
-            case "Settings":
-                // Puedes manejar la lógica de configuración aquí
-                break;
-            default:
-                Toast.makeText(binding.recyclerFragmentHome.getContext(), "No Item Selected", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
 }

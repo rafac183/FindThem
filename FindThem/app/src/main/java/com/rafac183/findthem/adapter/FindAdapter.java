@@ -9,33 +9,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.ui.home.HomeModel;
+import com.rafac183.findthem.ui.registered_persons.PersonsModel;
 
 import java.util.ArrayList;
 
 public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
-    private final ArrayList<HomeModel> homeList;
+    private final ArrayList<PersonsModel> personsList;
     private final FindInterface onClickListener;
 
-    public FindAdapter(ArrayList<HomeModel> homeList, FindInterface onClickListener) {
-        this.homeList = homeList;
+    public FindAdapter(ArrayList<PersonsModel> personsList, FindInterface onClickListener) {
+        this.personsList = personsList;
         this.onClickListener = onClickListener;
     }
 
     @NonNull
     @Override
     public FindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_home, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_registered, parent, false);
         return new FindViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FindViewHolder holder, int position) {
-        HomeModel homeModel = homeList.get(position);
-        holder.RenderHome(homeModel, onClickListener);
+        PersonsModel personsModel = personsList.get(position);
+        holder.RenderHome(personsModel, onClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return homeList.size();
+        return personsList.size();
     }
 }
