@@ -1,11 +1,11 @@
-package com.rafac183.findthem.ui.registered_persons;
+package com.rafac183.findthem.ui.registered_pets;
 
-public class PeopleModel {
+public class PetsModel {
     private String name;
     private String description;
     private String image;
 
-    public PeopleModel(String name, String description, String image) {
+    public PetsModel(String name, String description, String image) {
         this.name = name;
         this.description = description;
         this.image = image;

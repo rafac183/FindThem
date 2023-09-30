@@ -8,15 +8,16 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_persons">Registered Persons</string>
+    <string name="menu_people">Registered People</string>
     <string name="menu_pets">Registered Pets</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="menu_registrations">Registrations</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
-    <string name="ingresar_datos">Ingresar Datos</string>
+    <string name="enter_data">Enter Data</string>
     <string name="menu_communicate">Communicate</string>
     <string name="menu_share">Share</string>
     <string name="menu_rate_us">Rate Us</string>
+    <string name="exit">Exit</string>
 </resources>

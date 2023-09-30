@@ -2,7 +2,9 @@ package com.rafac183.findthem.activities;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,11 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
 
         /*--------Methods--------*/
         SendImg();
+    }
+
+    @Override
+    public void LargeBtn(View v) {
+        Toast.makeText(binding.rlParent.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
     }
 
     /*----------Send Images-----------*/

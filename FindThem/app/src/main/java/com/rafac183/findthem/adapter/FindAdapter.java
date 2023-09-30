@@ -8,17 +8,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafac183.findthem.R;
-import com.rafac183.findthem.ui.registered_persons.PeopleModel;
+import com.rafac183.findthem.ui.registered_people.PeopleModel;
+import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
 import java.util.ArrayList;
 
 public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
-    private final ArrayList<PeopleModel> personsList;
+    private final ArrayList<PeopleModel> peopleList;
+    private final ArrayList<PetsModel> petsList;
     private final FindInterface onClickListener;
+    private boolean isPeopleList;
 
-    public FindAdapter(ArrayList<PeopleModel> personsList, FindInterface onClickListener) {
-        this.personsList = personsList;
+    public FindAdapter(ArrayList<PeopleModel> peopleList, ArrayList<PetsModel> petsList, FindInterface onClickListener) {
+        this.peopleList = peopleList;
+        this.petsList = petsList;
         this.onClickListener = onClickListener;
+
+        // Establecer la condición para determinar cuál lista se usará
+        isPeopleList = peopleList != null && !peopleList.isEmpty();
     }
 
     @NonNull
@@ -30,12 +37,18 @@ public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FindViewHolder holder, int position) {
-        PeopleModel peopleModel = personsList.get(position);
-        holder.RenderHome(peopleModel, onClickListener);
+        if(peopleList == null){
+            PetsModel petsModel = petsList.get(position);
+            holder.RenderPets(petsModel, onClickListener);
+        } else {
+            PeopleModel peopleModel = peopleList.get(position);
+            holder.RenderPeople(peopleModel, onClickListener);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return personsList.size();
+        return isPeopleList ? peopleList.size() : petsList.size();
     }
+
 }

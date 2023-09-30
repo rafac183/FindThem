@@ -16,9 +16,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_persons"
+                    android:id="@+id/nav_people"
                     android:icon="@drawable/group_of_people_icon"
-                    android:title="@string/menu_persons"/>
+                    android:title="@string/menu_people"/>
                 <item
                     android:id="@+id/nav_pets"
                     android:icon="@drawable/pets_icon"

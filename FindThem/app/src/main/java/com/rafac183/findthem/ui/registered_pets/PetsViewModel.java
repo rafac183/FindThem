@@ -4,16 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.rafac183.findthem.adapter.PeopleAndPetsData;
+
+import java.util.ArrayList;
+
 public class PetsViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<ArrayList<PetsModel>> petsData = new MutableLiveData<>();
 
     public PetsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is registered pets fragment");
+        // Obtener datos de MyData y almacenarlos en homeData
+        ArrayList<PetsModel> data = PeopleAndPetsData.getPetsList();
+        petsData.setValue(data);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<ArrayList<PetsModel>> getPetsData() {
+        return petsData;
     }
 }

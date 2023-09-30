@@ -33,8 +33,17 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
         /*----------Methods----------*/
         SendImg();
     }
+
+
+    /*------------Button If the user dont have account---------*/
+    public void DontHaveAccount(View v){
+        Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(myIntent);
+    }
+
     /*-----------Button Login-----------*/
-    public void BtnLogin(View v){
+    @Override
+    public void LargeBtn(View v){
         String uName = binding.textUser.getText().toString().trim();
         String uPass = binding.textPass.getText().toString().trim();
 
@@ -47,12 +56,6 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
             startActivity(myIntent);
             finish();
         }
-    }
-
-    /*------------Button If the user dont have account---------*/
-    public void DontHaveAccount(View v){
-        Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(myIntent);
     }
 
     /*----------Send Images----------*/

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,9 @@ public class SplashActivity extends Activity implements ActivityInterface{
         };
         tiempo.schedule(tarea,0, 50);
     }
+
+    @Override
+    public void LargeBtn(View v) {}
 
     /*-----------Send Images-----------*/
     @Override

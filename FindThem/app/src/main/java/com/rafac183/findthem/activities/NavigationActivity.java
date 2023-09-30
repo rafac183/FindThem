@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -51,19 +52,13 @@ public class NavigationActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_persons, R.id.nav_pets, R.id.nav_profile, R.id.nav_share, R.id.nav_rate_us)//Si no lo coloco aqui no podre abrir otra vez la pestaña
+                R.id.nav_home, R.id.nav_people, R.id.nav_pets, R.id.nav_profile, R.id.nav_share, R.id.nav_rate_us)//Si no lo coloco aqui no podre abrir otra vez la pestaña
                 .setOpenableLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-
-        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-
-
-
     }
 
     @Override
@@ -71,6 +66,17 @@ public class NavigationActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(NavigationActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,6 +104,7 @@ public class NavigationActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
                 startActivity(myIntent);
                 finish();
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
@@ -109,22 +116,3 @@ public class NavigationActivity extends AppCompatActivity {
         tvUsername.setText(username);
     }
 }
-
-//binding.navView.setNavigationItemSelectedListener(this);
-
-        /*binding.appBarNavigation.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-    /*@Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            //case R.id.
-        }
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }*/

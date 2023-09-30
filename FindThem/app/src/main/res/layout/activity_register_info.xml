@@ -128,9 +128,10 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="@string/ingresar_datos"
+        android:text="@string/enter_data"
         android:layout_marginHorizontal="28dp"
         android:layout_alignParentBottom="true"
+        android:onClick="LargeBtn"
         style="@style/MaterialBtn"/>
 
 </RelativeLayout>

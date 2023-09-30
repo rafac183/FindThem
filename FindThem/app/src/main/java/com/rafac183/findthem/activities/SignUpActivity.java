@@ -36,20 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         SendImg();
     }
 
-    /*-------------Button Create Account------------*/
-    public void BtnSignIn(View v) {
-        /*if (seleccionarChk.isChecked() == true){
-            Toast tost = Toast.makeText(this, mensaje, Toast.LENGTH_LONG);
-            tost.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.START, 90, 0);
-            tost.show();
-        } else {
-            mensaje = "No Seleccionado";
-            Toast tost = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
-            tost.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.START, 90, 0);
-            tost.show();
-        }*/
-        Toast.makeText(this, "Registro Completado", Toast.LENGTH_SHORT).show();
-    }
+
 
     /*-------------Button If the User Have Account------------*/
     public void HaveAccount(View v){
@@ -57,6 +44,11 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         startActivity(myIntent);
     }
 
+    /*-------------Button Create Account------------*/
+    @Override
+    public void LargeBtn(View v) {
+        Toast.makeText(this, "Registro Completado", Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void SendImg() {
         String bg = "https://i.ibb.co/LzNt7W9/bg.png";

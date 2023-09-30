@@ -1,5 +1,10 @@
 package com.rafac183.findthem.activities;
 
+import android.view.View;
+
 public interface ActivityInterface {
-    public void SendImg();
+    /*-----------Button Login-----------*/
+    void LargeBtn(View v);
+
+    void SendImg();
 }

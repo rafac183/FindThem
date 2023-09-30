@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_persons"
-        android:name="com.rafac183.findthem.ui.registered_persons.PeopleFragment"
-        android:label="@string/menu_persons"
+        android:id="@+id/nav_people"
+        android:name="com.rafac183.findthem.ui.registered_people.PeopleFragment"
+        android:label="@string/menu_people"
         tools:layout="@layout/fragment_people" />
 
     <fragment

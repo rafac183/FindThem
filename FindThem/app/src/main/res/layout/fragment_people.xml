@@ -5,10 +5,10 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:id="@+id/homeFragment"
-tools:context=".ui.registered_persons.PeopleFragment">
+tools:context=".ui.registered_people.PeopleFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFragmentPersons"
+        android:id="@+id/recyclerFragmentPeople"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"

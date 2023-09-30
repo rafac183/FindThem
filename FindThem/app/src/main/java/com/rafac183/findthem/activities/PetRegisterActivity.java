@@ -57,6 +57,10 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+    @Override
+    public void LargeBtn(View v) {
+        Toast.makeText(binding.rlParent.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
+    }
 
     /*---------Send Images---------*/
     @Override
@@ -77,17 +81,5 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
                 });
     }
 
-    /*public void btnChekPet(View v) {
-        String mensaje;
-        if (binding.isChecked() == true) {
-            Intent myIntent = new Intent(PetRegisterActivity.this, HomeActivity.class);
-            startActivity(myIntent);
-        } else {
-            mensaje = "No Seleccionado";
-            Toast tost = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
-            tost.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.START, 90, 0);
-            tost.show();
-        }
 
-    }*/
 }

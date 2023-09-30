@@ -140,7 +140,7 @@
                 android:layout_height="60dp"
                 android:text="Sign In"
                 app:cornerRadius="32dp"
-                android:onClick="BtnSignIn"/>
+                android:onClick="LargeBtn"/>
 
             <View
                 android:layout_width="wrap_content"
