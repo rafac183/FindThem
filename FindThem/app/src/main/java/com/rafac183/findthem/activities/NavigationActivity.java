@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,7 +28,7 @@ public class NavigationActivity extends AppCompatActivity {
     /*Variables*/
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationBinding binding;
-    private HomeFragment homeFragment;
+    private Menu menuNV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,30 +36,31 @@ public class NavigationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         /*--------------Methods------------*/
-        MenuLogOut();
+        MenuBtns();
         getUserName();
 
         /*--------------Toolbar------------*/
         setSupportActionBar(binding.appBarNavigation.toolbar);
 
-        /*--------------Navigation Drawer Menu---------------*/
-        binding.navView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.appBarNavigation.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        binding.drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
+        /*--------------Fragments------------*/
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_people, R.id.nav_pets, R.id.nav_profile, R.id.nav_share, R.id.nav_rate_us)//Si no lo coloco aqui no podre abrir otra vez la pestaña
+                R.id.nav_home, R.id.nav_people, R.id.nav_pets)//Si no lo coloco aqui no podre abrir otra vez la pestaña
                 .setOpenableLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        /*--------------Navigation Drawer Menu---------------*/
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, binding.appBarNavigation.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     @Override
@@ -94,19 +96,29 @@ public class NavigationActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-    public void MenuLogOut(){
+    public void MenuBtns(){
         /*--------------LogOut-------------*/
-        Menu menu = binding.navView.getMenu();
-        menu.findItem(R.id.nav_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
-                startActivity(myIntent);
-                finish();
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
+        menuNV = binding.navView.getMenu();
+        menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
+            Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+            return true;
+        });
+        menuNV.findItem(R.id.nav_profile).setOnMenuItemClickListener(item -> {
+            Intent myIntent = new Intent(NavigationActivity.this, ProfileActivity.class);
+            startActivity(myIntent);
+            return true;
+        });
+        menuNV.findItem(R.id.nav_rate_us).setOnMenuItemClickListener(item -> {
+            Intent myIntent = new Intent(NavigationActivity.this, RateUsActivity.class);
+            startActivity(myIntent);
+            return true;
+        });
+        menuNV.findItem(R.id.nav_share).setOnMenuItemClickListener(item -> {
+            Intent myIntent = new Intent(NavigationActivity.this, ShareActivity.class);
+            startActivity(myIntent);
+            return true;
         });
     }
 
@@ -115,4 +127,6 @@ public class NavigationActivity extends AppCompatActivity {
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
         tvUsername.setText(username);
     }
+
+
 }

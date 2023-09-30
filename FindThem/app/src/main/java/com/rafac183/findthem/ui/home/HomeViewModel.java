@@ -11,6 +11,7 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<HomeModel>> homeData = new MutableLiveData<>();
 
     public HomeViewModel() {
+        homeData.setValue(null);
         // Obtener datos de MyData y almacenarlos en homeData
         ArrayList<HomeModel> data = HomeData.getHomeList();
         homeData.setValue(data);

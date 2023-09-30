@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rate_us.RateUsFragment">
+    tools:context=".activities.RateUsActivity">
 
     <TextView
-        android:id="@+id/text_rate"
+        android:id="@+id/tvRateUs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_rate"
+        app:layout_constraintTop_toBottomOf="@id/tvRateUs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.3"/>
@@ -38,4 +38,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.7"
         android:text="Submit"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
