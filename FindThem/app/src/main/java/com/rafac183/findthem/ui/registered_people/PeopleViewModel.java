@@ -14,7 +14,7 @@ public class PeopleViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<PeopleModel>> peopleData = new MutableLiveData<>();
 
     public PeopleViewModel() {
-        // Obtener datos de MyData y almacenarlos en homeData
+        peopleData.setValue(null);
         ArrayList<PeopleModel> data = PeopleAndPetsData.getPeopleList();
         peopleData.setValue(data);
     }
