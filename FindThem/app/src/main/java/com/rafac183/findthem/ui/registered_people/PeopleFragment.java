@@ -1,5 +1,7 @@
 package com.rafac183.findthem.ui.registered_people;
 
+import static java.util.Collections.addAll;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,34 +11,32 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.rafac183.findthem.R;
 import com.rafac183.findthem.activities.RegisterInfoActivity;
 import com.rafac183.findthem.adapter.FindAdapter;
 import com.rafac183.findthem.adapter.FindInterface;
 import com.rafac183.findthem.databinding.FragmentPeopleBinding;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
+import java.util.ArrayList;
+
 public class PeopleFragment extends Fragment implements FindInterface {
 
     private FragmentPeopleBinding binding;
-    private PeopleViewModel peopleViewModel;
-
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        peopleViewModel = new ViewModelProvider(this).get(PeopleViewModel.class); //esto se trae la lista
+        PeopleViewModel peopleViewModel = new ViewModelProvider(this).get(PeopleViewModel.class); //esto se trae la lista
 
         binding = FragmentPeopleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        peopleViewModel.getPeopleData().observe(getViewLifecycleOwner(), this::initRecyclerView);
+
         /*------------Methods------------*/
-        SetRecyclerView();
         onClickAdd();
 
         return root;
@@ -48,35 +48,23 @@ public class PeopleFragment extends Fragment implements FindInterface {
         binding = null;
     }
 
-    public void initRecyclerView(){
+    public void initRecyclerView(ArrayList<PeopleModel> peopleList){
         LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerFragmentPeople.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
         DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentPeople.getContext(), manager.getOrientation());
         binding.recyclerFragmentPeople.setHasFixedSize(true); //Extra
         binding.recyclerFragmentPeople.setItemAnimator(new DefaultItemAnimator());//Extra
         binding.recyclerFragmentPeople.setLayoutManager(manager);
+        binding.recyclerFragmentPeople.setAdapter(new FindAdapter(peopleList,null, PeopleFragment.this));
     }
-
-    public void SetRecyclerView() {
-        initRecyclerView();
-        peopleViewModel.getPeopleData().observe(getViewLifecycleOwner(), peopleList -> {
-            // Actualiza el RecyclerView con los nuevos datos
-            binding.recyclerFragmentPeople.setAdapter(new FindAdapter(peopleList,null, PeopleFragment.this));
-        });
-    }
-
     @Override
     public void onCLickCV(PeopleModel peopleModel, PetsModel petsModel) {
         Toast.makeText(binding.recyclerFragmentPeople.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onClickAdd() {
-        binding.fabPeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(binding.fabPeople.getContext(), RegisterInfoActivity.class);
-                startActivity(myIntent);
-            }
+        binding.fabPeople.setOnClickListener(view -> {
+            Intent myIntent = new Intent(binding.fabPeople.getContext(), RegisterInfoActivity.class);
+            startActivity(myIntent);
         });
     }
 }

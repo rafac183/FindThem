@@ -24,6 +24,7 @@ public class RateUsActivity extends AppCompatActivity {
 
         /*--------Methods----------*/
         SubmitRating();
+        binding.tvRateUs.setText("Rate Us!");
     }
 
     public void SubmitRating() {

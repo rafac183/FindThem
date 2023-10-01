@@ -11,6 +11,7 @@ public class PeopleAndPetsData {
     static ArrayList<PetsModel> petsList = new ArrayList<>();
 
     public static ArrayList<PeopleModel> getPeopleList() {
+        peopleList.clear();
         peopleList.add(new PeopleModel("Person 1", "Description 1", "https://i.ibb.co/NyVJjTp/registered-People.png"));
         peopleList.add(new PeopleModel("Person 2", "Description 2", "https://i.ibb.co/ggQPSnb/datosmascota.png"));
         peopleList.add(new PeopleModel("Person 3", "Description 3", "https://i.ibb.co/c8fbs3r/datospersonales.png"));
@@ -20,6 +21,7 @@ public class PeopleAndPetsData {
         return peopleList;
     }
     public static ArrayList<PetsModel> getPetsList() {
+        petsList.clear();
         petsList.add(new PetsModel("Pet 1", "Description 1", "https://i.ibb.co/NyVJjTp/registered-People.png"));
         petsList.add(new PetsModel("Pet 2", "Description 2", "https://i.ibb.co/ggQPSnb/datosmascota.png"));
         petsList.add(new PetsModel("Pet 3", "Description 3", "https://i.ibb.co/c8fbs3r/datospersonales.png"));

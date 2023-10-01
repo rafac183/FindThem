@@ -26,6 +26,17 @@ tools:context=".ui.registered_people.PeopleFragment">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.2"/>
+    <TextView
+        android:id="@+id/prueba2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hola"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/prueba"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPeople"
         android:layout_width="wrap_content"

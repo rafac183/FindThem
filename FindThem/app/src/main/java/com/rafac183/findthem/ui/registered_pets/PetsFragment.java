@@ -23,19 +23,20 @@ import com.rafac183.findthem.adapter.FindInterface;
 import com.rafac183.findthem.databinding.FragmentPetsBinding;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 
+import java.util.ArrayList;
+
 public class PetsFragment extends Fragment implements FindInterface {
 
     private FragmentPetsBinding binding;
-    private PetsViewModel petsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        petsViewModel = new ViewModelProvider(this).get(PetsViewModel.class);
+        PetsViewModel petsViewModel = new ViewModelProvider(this).get(PetsViewModel.class);
 
         binding = FragmentPetsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         /*--------------Methods--------------*/
-        SetRecyclerView();
+        petsViewModel.getPetsData().observe(getViewLifecycleOwner(), this::initRecyclerView);
         onClickAdd();
 
         return root;
@@ -47,20 +48,13 @@ public class PetsFragment extends Fragment implements FindInterface {
         binding = null;
     }
 
-    public void initRecyclerView(){
+    public void initRecyclerView(ArrayList<PetsModel> petsList){
         LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerFragmentPets.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
         DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentPets.getContext(), manager.getOrientation());
         binding.recyclerFragmentPets.setHasFixedSize(true); //Extra
         binding.recyclerFragmentPets.setItemAnimator(new DefaultItemAnimator());//Extra
         binding.recyclerFragmentPets.setLayoutManager(manager);
-    }
-
-    public void SetRecyclerView() {
-        initRecyclerView();
-        petsViewModel.getPetsData().observe(getViewLifecycleOwner(), petsList -> {
-            // Actualiza el RecyclerView con los nuevos datos
-            binding.recyclerFragmentPets.setAdapter(new FindAdapter(null,petsList, PetsFragment.this));
-        });
+        binding.recyclerFragmentPets.setAdapter(new FindAdapter(null,petsList, PetsFragment.this));
     }
 
     @Override
@@ -69,12 +63,9 @@ public class PetsFragment extends Fragment implements FindInterface {
     }
 
     public void onClickAdd() {
-        binding.fabPets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(binding.fabPets.getContext(), PetRegisterActivity.class);
-                startActivity(myIntent);
-            }
+        binding.fabPets.setOnClickListener(view -> {
+            Intent myIntent = new Intent(binding.fabPets.getContext(), PetRegisterActivity.class);
+            startActivity(myIntent);
         });
     }
 }
