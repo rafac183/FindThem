@@ -43,7 +43,7 @@ public class RateUsActivity extends AppCompatActivity {
                         break;
                     case "2.0":
                     case "2.5":
-                        Toast.makeText(binding.ratingBar.getContext(), rating + "? Que mas Quieres? ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(binding.ratingBar.getContext(), rating + "? Perfeccionista!", Toast.LENGTH_SHORT).show();
                         break;
                     case "3.0":
                     case "3.5":
@@ -51,7 +51,7 @@ public class RateUsActivity extends AppCompatActivity {
                         break;
                     case "4.0":
                     case "4.5":
-                        Toast.makeText(binding.ratingBar.getContext(), rating + "? Perfeccionista!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(binding.ratingBar.getContext(), rating + "? Que mas Quieres? ", Toast.LENGTH_SHORT).show();
                         break;
                     case "5.0":
                         Toast.makeText(binding.ratingBar.getContext(), rating + "? Por Fin Buena Nota! ", Toast.LENGTH_SHORT).show();

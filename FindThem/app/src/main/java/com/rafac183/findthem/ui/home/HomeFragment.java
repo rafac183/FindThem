@@ -52,12 +52,14 @@ public class HomeFragment extends Fragment {
     public void SetInfo() {
         homeViewModel.getHomeData().observe(getViewLifecycleOwner(), homeList -> {
             CardView[] cards = {
+                    binding.cvWelcome,
                     binding.cvProfile,
                     binding.cvRateUs,
                     binding.cvShare,
                     binding.cvSettings
             };
             ImageView[] cardImgIds = {
+                    binding.ivWelcome,
                     binding.ivProfile,
                     binding.ivRateUs,
                     binding.ivShare,
@@ -65,6 +67,7 @@ public class HomeFragment extends Fragment {
             };
 
             TextView[] cardNameIds = {
+                    binding.cardNameWelcome,
                     binding.cardNameProfile,
                     binding.cardNameRateUs,
                     binding.cardNameShare,
@@ -72,6 +75,7 @@ public class HomeFragment extends Fragment {
             };
 
             TextView[] cardDescIds = {
+                    binding.cardDescWelcome,
                     binding.cardDescProfile,
                     binding.cardDescRateUs,
                     binding.cardDescShare,
@@ -85,7 +89,9 @@ public class HomeFragment extends Fragment {
                 TextView cardDescTextView = cardDescIds[i];
 
                 HomeModel homeModel = homeList.get(i);
-                cardView.setOnClickListener(v -> ItemSelected(homeModel));
+                if (i != 0) {
+                    cardView.setOnClickListener(v -> ItemSelected(homeModel));
+                }
                 Glide.with(this).load(homeModel.getImage()).into(cardImageView);
                 cardNameTextView.setText(homeModel.getName());
                 cardDescTextView.setText(homeModel.getDescription());

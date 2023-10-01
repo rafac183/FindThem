@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:id="@+id/homeFragment"
+android:id="@+id/peopleFragment"
 tools:context=".ui.registered_people.PeopleFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,28 +16,6 @@ tools:context=".ui.registered_people.PeopleFragment">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:scrollbars="vertical"/>
-    <TextView
-        android:id="@+id/prueba"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hola"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/recyclerFragmentPeople"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.2"/>
-    <TextView
-        android:id="@+id/prueba2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hola"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/prueba"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.2"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPeople"
         android:layout_width="wrap_content"
