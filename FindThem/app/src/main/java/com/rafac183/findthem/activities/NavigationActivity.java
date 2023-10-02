@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,13 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
 import com.rafac183.findthem.ui.home.HomeFragment;
+import com.rafac183.findthem.ui.home.HomeViewModel;
 
 public class NavigationActivity extends AppCompatActivity {
 
     /*Variables*/
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationBinding binding;
-    private Menu menuNV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,7 @@ public class NavigationActivity extends AppCompatActivity {
     }
     public void MenuBtns(){
         /*--------------LogOut-------------*/
-        menuNV = binding.navView.getMenu();
+        Menu menuNV = binding.navView.getMenu();
         menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
             startActivity(myIntent);
@@ -123,10 +124,10 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     public void getUserName(){
-        String username = getIntent().getStringExtra("user");
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        String uName = getIntent().getStringExtra("user");
+        String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
         tvUsername.setText(username);
     }
-
-
 }
