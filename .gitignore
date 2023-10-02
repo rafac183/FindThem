@@ -4,3 +4,5 @@
 *.png
 *.jpeg
 *.ico
+# Excepto los que contienen "app" en su nombre
+!**/*app*.png
