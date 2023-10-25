@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">FindThem</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoicmNvcmRlcm81IiwiYSI6ImNsbncyMmFwYjAwNDMyanFoaWY1aXRvbDMifQ.J8Izcv43eJg2gI2zAqe4jw</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
         String uName = binding.textUser.getText().toString().trim();
         String uPass = binding.textPass.getText().toString().trim();
 
-
         if (!uName.equals("admin") && !uPass.equals("admin123")) {
             Snackbar.make(v, "Datos Incorrectos", Snackbar.LENGTH_SHORT).show();
         } else {
