@@ -100,6 +100,12 @@ public class NavigationActivity extends AppCompatActivity {
     public void MenuBtns(){
         /*--------------LogOut-------------*/
         Menu menuNV = binding.navView.getMenu();
+        menuNV.findItem(R.id.nav_map).setOnMenuItemClickListener(item -> {
+            Intent myIntent = new Intent(NavigationActivity.this, MapBoxActivity.class);
+            startActivity(myIntent);
+            finish();
+            return true;
+        });
         menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
             startActivity(myIntent);
