@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
+import com.rafac183.findthem.services.ProximityService;
 import com.rafac183.findthem.ui.home.HomeFragment;
 import com.rafac183.findthem.ui.home.HomeViewModel;
 
@@ -35,6 +36,10 @@ public class NavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /*--------------Services------------*/
+        Intent serviceIntent = new Intent(this, ProximityService.class);
+        startService(serviceIntent);
 
         /*--------------Methods------------*/
         MenuBtns();
@@ -103,7 +108,6 @@ public class NavigationActivity extends AppCompatActivity {
         menuNV.findItem(R.id.nav_map).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, MapBoxActivity.class);
             startActivity(myIntent);
-            finish();
             return true;
         });
         menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
@@ -135,5 +139,14 @@ public class NavigationActivity extends AppCompatActivity {
         String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
         tvUsername.setText(username);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Detener el servicio
+        Intent serviceIntent = new Intent(this, ProximityService.class);
+        stopService(serviceIntent);
     }
 }
