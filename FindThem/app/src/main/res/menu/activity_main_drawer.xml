@@ -23,6 +23,10 @@
                     android:id="@+id/nav_pets"
                     android:icon="@drawable/pets_icon"
                     android:title="@string/menu_pets" />
+                <item
+                    android:id="@+id/nav_map"
+                    android:icon="@drawable/map_icon"
+                    android:title="@string/map_all_records" />
             </group>
         </menu>
     </item>

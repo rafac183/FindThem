@@ -17,39 +17,21 @@
         android:theme="@style/Base.Theme.FindThem"
         tools:targetApi="31">
         <activity
-            android:name=".activities.MapBoxActivity"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.ShareActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.RateUsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.NavigationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_navigation"
-            android:theme="@style/Base.Theme.FindThem.NoActionBar"/>
-        <activity
             android:name=".activities.LoginActivity"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
         <activity
             android:name=".activities.PetRegisterActivity"
             android:exported="false" />
@@ -57,9 +39,25 @@
             android:name=".activities.RegisterInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.NavigationActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Base.Theme.FindThem.NoActionBar"/>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RateUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MapBoxActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
