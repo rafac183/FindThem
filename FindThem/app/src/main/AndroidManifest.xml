@@ -19,8 +19,9 @@
         android:theme="@style/Base.Theme.FindThem"
         tools:targetApi="31">
         <activity
-            android:name=".activities.LoginActivity"
-            android:exported="true">
+            android:name=".activities.SplashActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,12 +29,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.LoginActivity"
+            android:exported="true"/>
+        <activity
             android:name=".activities.SignUpActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.SplashActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
         <activity
             android:name=".activities.PetRegisterActivity"
             android:exported="false" />
@@ -44,7 +44,7 @@
             android:name=".activities.NavigationActivity"
             android:exported="false"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/Base.Theme.FindThem.NoActionBar"/>
+            android:theme="@style/Base.Theme.FindThem.NoActionBar" />
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false" />
@@ -60,6 +60,7 @@
         <activity
             android:name=".activities.MapBoxActivity"
             android:exported="false" />
+
         <service android:name=".services.ProximityService" />
     </application>
 

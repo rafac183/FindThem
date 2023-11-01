@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
             Snackbar.make(v, "Datos Incorrectos", Snackbar.LENGTH_SHORT).show();
         } else {
             Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
+            myIntent.putExtra("mostrarProgressBar", true);
             myIntent.putExtra("user", uName);
             startActivity(myIntent);
             finish();

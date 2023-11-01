@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -23,13 +24,16 @@ import java.util.TimerTask;
 public class SplashActivity extends Activity implements ActivityInterface{
     private ActivitySplashBinding binding;
     private String username;
+    private boolean mostrarProgressBar = false;
     int count = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        username = getIntent().getStringExtra("user");
+
+        Intent intent = getIntent();
+        mostrarProgressBar = intent.getBooleanExtra("mostrarProgressBar", false);
 
         /*-------Methods--------*/
         SendImg();
@@ -37,23 +41,36 @@ public class SplashActivity extends Activity implements ActivityInterface{
     }
     /*----------Load Bar-----------*/
     public void ProgressBar(){
-        ProgressBar progressBar = findViewById(R.id.DeterminatePB);
-        final Timer tiempo = new Timer();
-        TimerTask tarea = new TimerTask() {
-            @Override
-            public void run() {
-                count++;
-                progressBar.setProgress(count);
-                if(count == 100){
-                    Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
-                    intent.putExtra("user", username);
-                    startActivity(intent);
-                    finish();
-                    tiempo.cancel();
+        ProgressBar progressBar = binding.DeterminatePB;
+
+        if (mostrarProgressBar){
+            progressBar.setVisibility(View.VISIBLE);
+            final Timer time = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    count++;
+                    progressBar.setProgress(count);
+                    if(count == 100){
+                        Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
+                        username = getIntent().getStringExtra("user");
+                        intent.putExtra("user", username);
+                        startActivity(intent);
+                        finish();
+                        time.cancel();
+                    }
                 }
-            }
-        };
-        tiempo.schedule(tarea,0, 50);
+            };
+            time.schedule(task,0, 50);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            new Handler().postDelayed(() -> {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }, 2000);
+        }
+
     }
 
     @Override
