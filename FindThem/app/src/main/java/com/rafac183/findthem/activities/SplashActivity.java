@@ -15,13 +15,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySplashBinding;
+import com.rafac183.findthem.interfaces.ActivityInterface;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends Activity implements ActivityInterface{
+public class SplashActivity extends Activity implements ActivityInterface {
     private ActivitySplashBinding binding;
     private String username;
     private boolean mostrarProgressBar = false;

@@ -17,8 +17,9 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
+import com.rafac183.findthem.interfaces.ActivityInterface;
 
-public class RegisterInfoActivity extends AppCompatActivity implements ActivityInterface{
+public class RegisterInfoActivity extends AppCompatActivity implements ActivityInterface {
     private ActivityRegisterInfoBinding binding;
 
     @Override

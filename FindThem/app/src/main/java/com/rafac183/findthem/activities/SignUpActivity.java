@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +18,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySignUpBinding;
+import com.rafac183.findthem.interfaces.ActivityInterface;
 
 public class SignUpActivity extends AppCompatActivity implements ActivityInterface {
 

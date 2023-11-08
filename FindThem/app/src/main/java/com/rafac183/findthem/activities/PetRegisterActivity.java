@@ -1,15 +1,11 @@
 package com.rafac183.findthem.activities;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +19,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
+import com.rafac183.findthem.interfaces.ActivityInterface;
 
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
 

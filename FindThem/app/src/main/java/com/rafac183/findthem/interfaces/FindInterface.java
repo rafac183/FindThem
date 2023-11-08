@@ -1,4 +1,4 @@
-package com.rafac183.findthem.adapter;
+package com.rafac183.findthem.interfaces;
 
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;

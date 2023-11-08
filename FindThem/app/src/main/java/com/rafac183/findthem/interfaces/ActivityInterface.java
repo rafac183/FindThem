@@ -1,4 +1,4 @@
-package com.rafac183.findthem.activities;
+package com.rafac183.findthem.interfaces;
 
 import android.view.View;
 

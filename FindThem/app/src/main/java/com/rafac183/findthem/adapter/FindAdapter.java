@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafac183.findthem.R;
+import com.rafac183.findthem.interfaces.FindInterface;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 

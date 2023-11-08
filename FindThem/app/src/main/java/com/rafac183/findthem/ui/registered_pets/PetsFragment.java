@@ -10,16 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.rafac183.findthem.R;
 import com.rafac183.findthem.activities.PetRegisterActivity;
 import com.rafac183.findthem.adapter.FindAdapter;
-import com.rafac183.findthem.adapter.FindInterface;
+import com.rafac183.findthem.interfaces.FindInterface;
 import com.rafac183.findthem.databinding.FragmentPetsBinding;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 

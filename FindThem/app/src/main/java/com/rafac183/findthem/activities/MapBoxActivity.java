@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ import com.rafac183.findthem.model.BitmapUtils;
 import com.rafac183.findthem.model.ShareLocation;
 
 import java.io.Console;
+import java.lang.ref.WeakReference;
 
 public class MapBoxActivity extends AppCompatActivity {
 
@@ -63,7 +65,8 @@ public class MapBoxActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private Point point;
     private DatabaseReference reference = null;
-    ShareLocation location;
+    private ShareLocation location;
+    private MaterialButton shareLocation;
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean o) {
@@ -112,7 +115,7 @@ public class MapBoxActivity extends AppCompatActivity {
 
         mapView = binding.mapView;
         floatingActionButton = binding.myLocation;
-        MaterialButton shareLocation = binding.shareLocation;
+        shareLocation = binding.shareLocation;
 
         location = new ShareLocation();
 
@@ -132,57 +135,15 @@ public class MapBoxActivity extends AppCompatActivity {
             locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
             getGestures(mapView).addOnMoveListener(onMoveListener);
 
-            AnnotationPlugin annotationPlugin = AnnotationPluginImplKt.getAnnotations(mapView);
-            PointAnnotationManager pointAnnotationManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationPlugin, new AnnotationConfig());
-
             floatingActionButton.setOnClickListener(v -> {
                 locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
                 locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
                 getGestures(mapView).addOnMoveListener(onMoveListener);
                 floatingActionButton.hide();
             });
+            FireBaseAsync fireBaseAsync = new FireBaseAsync(MapBoxActivity.this);
+            fireBaseAsync.execute();
 
-            FirebaseDatabase.getInstance().getReference().child("sharedLocations").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    pointAnnotationManager.deleteAll();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        snapshot.getChildren().forEach(dataSnapshot -> {
-                            ShareLocation location1 = dataSnapshot.getValue(ShareLocation.class);
-                            if (location1 != null && !location1.getId().equals(MapBoxActivity.this.location.getId())){
-                                Glide.with(MapBoxActivity.this).asBitmap().load("https://i.ibb.co/F4B4GZQ/location.png")
-                                        .into(new SimpleTarget<Bitmap>() {
-                                            @Override
-                                            public void onResourceReady(@NonNull Bitmap oldResource, @Nullable Transition<? super Bitmap> transition) {
-                                                int newWidth = 100;
-                                                int newHeight = 100;
-                                                Bitmap scaledResource = Bitmap.createScaledBitmap(oldResource, newWidth, newHeight, false);
-                                                PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
-                                                        .withTextAnchor(TextAnchor.CENTER)
-                                                        .withIconImage(BitmapUtils.getBitmapFromDrawable(getResources(), new BitmapDrawable(getResources(), scaledResource)))
-                                                        .withPoint(Point.fromLngLat(location1.getLongitude(), location1.getLatitude()));
-                                                pointAnnotationManager.create(pointAnnotationOptions);
-                                            }
-                                        });
-                            }
-                        });
-                    }
-                    pointAnnotationManager.addClickListener(pointAnnotation -> {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            snapshot.getChildren().forEach(dataSnapshot -> {
-                                ShareLocation location1 = dataSnapshot.getValue(ShareLocation.class);
-                                if (location1 != null && pointAnnotation.getPoint().longitude() == location1.getLongitude() && pointAnnotation.getPoint().latitude() == location1.getLatitude()){
-                                    Toast.makeText(MapBoxActivity.this, "Clicked" + location1.getId() + " Marker", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        return true;
-                    });
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
             shareLocation.setOnClickListener(v -> {
                 if (reference == null){
                     Toast.makeText(MapBoxActivity.this, "Sharing location...", Toast.LENGTH_SHORT).show();
@@ -202,5 +163,84 @@ public class MapBoxActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private class FireBaseAsync extends AsyncTask<Void, Void, Boolean>{
+        PointAnnotationManager pointAnnotationManager;
+        private WeakReference<MapBoxActivity> activityRef;
+
+        FireBaseAsync(MapBoxActivity activity) {
+            activityRef = new WeakReference<>(activity);
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            AnnotationPlugin annotationPlugin = AnnotationPluginImplKt.getAnnotations(mapView);
+            pointAnnotationManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationPlugin, new AnnotationConfig());
+        }
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                MapBoxActivity activity = activityRef.get();
+                if (activity != null) {
+                    FirebaseDatabase.getInstance().getReference().child("sharedLocations").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            pointAnnotationManager.deleteAll();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                snapshot.getChildren().forEach(dataSnapshot -> {
+                                    ShareLocation location1 = dataSnapshot.getValue(ShareLocation.class);
+                                    if (location1 != null && !location1.getId().equals(activity.location.getId())){
+                                        Glide.with(activity).asBitmap().load("https://i.ibb.co/F4B4GZQ/location.png")
+                                                .into(new SimpleTarget<Bitmap>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Bitmap oldResource, @Nullable Transition<? super Bitmap> transition) {
+                                                        int newWidth = 100;
+                                                        int newHeight = 100;
+                                                        Bitmap scaledResource = Bitmap.createScaledBitmap(oldResource, newWidth, newHeight, false);
+                                                        PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                                                                .withTextAnchor(TextAnchor.CENTER)
+                                                                .withIconImage(BitmapUtils.getBitmapFromDrawable(getResources(), new BitmapDrawable(getResources(), scaledResource)))
+                                                                .withPoint(Point.fromLngLat(location1.getLongitude(), location1.getLatitude()));
+                                                        pointAnnotationManager.create(pointAnnotationOptions);
+                                                    }
+                                                });
+                                    }
+                                });
+                            }
+                            pointAnnotationManager.addClickListener(pointAnnotation -> {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    snapshot.getChildren().forEach(dataSnapshot -> {
+                                        ShareLocation location1 = dataSnapshot.getValue(ShareLocation.class);
+                                        if (location1 != null && pointAnnotation.getPoint().longitude() == location1.getLongitude() && pointAnnotation.getPoint().latitude() == location1.getLatitude()){
+                                            Toast.makeText(activity, "Clicked" + location1.getId() + " Marker", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                return true;
+                            });
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                return true;
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+                return false;
+            }
+        }
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Toast.makeText(activityRef.get(), "Locations Loaded", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onCancelled(Boolean aBoolean) {
+            super.onCancelled(aBoolean);
+            Toast.makeText(activityRef.get(), "Locations not Loaded", Toast.LENGTH_SHORT).show();
+        }
     }
 }

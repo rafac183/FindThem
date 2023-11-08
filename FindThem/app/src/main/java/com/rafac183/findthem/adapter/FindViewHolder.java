@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rafac183.findthem.databinding.CardViewRegisteredBinding;
+import com.rafac183.findthem.interfaces.FindInterface;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
