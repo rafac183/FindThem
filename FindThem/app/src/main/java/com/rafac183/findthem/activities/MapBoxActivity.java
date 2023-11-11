@@ -234,13 +234,17 @@ public class MapBoxActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            Toast.makeText(activityRef.get(), "Locations Loaded", Toast.LENGTH_SHORT).show();
+            if(aBoolean){
+                Toast.makeText(activityRef.get(), "Locations Loaded", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
         protected void onCancelled(Boolean aBoolean) {
             super.onCancelled(aBoolean);
-            Toast.makeText(activityRef.get(), "Locations not Loaded", Toast.LENGTH_SHORT).show();
+            if(aBoolean){
+                Toast.makeText(activityRef.get(), "Locations not Loaded", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
