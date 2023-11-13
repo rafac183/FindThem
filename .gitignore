@@ -4,5 +4,7 @@
 *.png
 *.jpeg
 *.ico
+*.jks
+FindThem/app/release
 # Excepto los que contienen "app" en su nombre
-!**/*app*.png
+#!**/*app*.png
