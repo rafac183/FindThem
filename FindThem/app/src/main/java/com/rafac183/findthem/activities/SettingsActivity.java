@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity implements ActivityInter
         setContentView(binding.getRoot());
 
         /*-----------Methods------------*/
-        SendImg();
+        Hilos();
     }
 
     @Override
@@ -56,5 +56,10 @@ public class SettingsActivity extends AppCompatActivity implements ActivityInter
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) { }
                 });
+    }
+
+    @Override
+    public void Hilos() {
+        new Thread(() -> SendImg());
     }
 }

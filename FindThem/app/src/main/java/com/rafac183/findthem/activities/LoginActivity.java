@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
         setContentView(binding.getRoot());
 
         /*----------Methods----------*/
-        SendImg();
+        Hilos();
     }
 
 
@@ -84,5 +84,10 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) {}
                 });
+    }
+
+    @Override
+    public void Hilos() {
+        new Thread(() -> SendImg());
     }
 }

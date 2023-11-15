@@ -31,7 +31,7 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
         setContentView(binding.getRoot());
 
         /*--------Methods--------*/
-        SendImg();
+        Hilos();
     }
 
     @Override
@@ -57,5 +57,10 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) { }
                 });
+    }
+
+    @Override
+    public void Hilos() {
+        new Thread(() -> SendImg());
     }
 }

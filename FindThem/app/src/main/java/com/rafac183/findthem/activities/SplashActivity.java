@@ -36,7 +36,7 @@ public class SplashActivity extends Activity implements ActivityInterface {
         mostrarProgressBar = intent.getBooleanExtra("mostrarProgressBar", false);
 
         /*-------Methods--------*/
-        SendImg();
+        Hilos();
         ProgressBar();
     }
     /*----------Load Bar-----------*/
@@ -96,4 +96,10 @@ public class SplashActivity extends Activity implements ActivityInterface {
                     public void onLoadCleared(@Nullable Drawable placeholder) {}
                 });
     }
+
+    @Override
+    public void Hilos() {
+        new Thread(() -> SendImg());
+    }
+
 }

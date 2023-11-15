@@ -33,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         setContentView(binding.getRoot());
 
         /*---------Methods--------*/
-        SendImg();
+        Hilos();
     }
 
 
@@ -76,5 +76,9 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
 
                     }
                 });
+    }
+
+    public void Hilos(){
+        new Thread(() -> SendImg());
     }
 }

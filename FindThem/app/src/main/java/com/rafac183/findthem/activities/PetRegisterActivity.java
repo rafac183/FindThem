@@ -35,7 +35,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         setContentView(binding.getRoot());
 
         /*--------Methods--------*/
-        SendImg();
+        Hilos();
 
         binding.spinnerGender.setOnItemSelectedListener(this);
 
@@ -76,6 +76,11 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) {}
                 });
+    }
+
+    @Override
+    public void Hilos() {
+        new Thread(() -> SendImg());
     }
 
 
