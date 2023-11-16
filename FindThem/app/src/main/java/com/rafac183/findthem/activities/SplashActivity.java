@@ -73,9 +73,6 @@ public class SplashActivity extends Activity implements ActivityInterface {
 
     }
 
-    @Override
-    public void LargeBtn(View v) {}
-
     /*-----------Send Images-----------*/
     @Override
     public void SendImg() {

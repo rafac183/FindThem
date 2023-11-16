@@ -77,6 +77,7 @@
                 android:textStyle="bold"/>
 
             <EditText
+                android:id="@+id/tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -92,7 +93,7 @@
                 android:textStyle="bold"/>
 
             <EditText
-                android:id="@+id/textUser"
+                android:id="@+id/tvUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -109,6 +110,7 @@
                 android:textStyle="bold"/>
 
             <EditText
+                android:id="@+id/tvPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -136,6 +138,7 @@
                 android:layout_height="20dp"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Sign In"

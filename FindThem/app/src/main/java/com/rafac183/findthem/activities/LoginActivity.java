@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
     }
 
     /*-----------Button Login-----------*/
-    @Override
     public void LargeBtn(View v){
         String uName = binding.textUser.getText().toString().trim();
         String uPass = binding.textPass.getText().toString().trim();

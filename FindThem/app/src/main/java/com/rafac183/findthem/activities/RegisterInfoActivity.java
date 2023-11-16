@@ -34,7 +34,6 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
         Hilos();
     }
 
-    @Override
     public void LargeBtn(View v) {
         Toast.makeText(binding.rlParent.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
     }

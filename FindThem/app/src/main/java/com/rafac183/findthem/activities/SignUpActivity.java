@@ -10,12 +10,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ktx.Firebase;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySignUpBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
@@ -23,6 +27,9 @@ import com.rafac183.findthem.interfaces.ActivityInterface;
 public class SignUpActivity extends AppCompatActivity implements ActivityInterface {
 
     private ActivitySignUpBinding binding;
+    private EditText tvEmail, tvUsername, tvPass;
+    private Button signIn;
+    private FirebaseAuth authentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,13 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        /*---------Variables---------*/
+        tvEmail = binding.tvEmail;
+        tvUsername = binding.tvUsername;
+        tvPass = binding.tvPass;
+        signIn = binding.SignInBtn;
+        authentication = FirebaseAuth.getInstance();
 
         /*---------Methods--------*/
         Hilos();
@@ -45,8 +59,12 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
     }
 
     /*-------------Button Create Account------------*/
-    @Override
-    public void LargeBtn(View v) {
+    public void LargeBtn() {
+        signIn.setOnClickListener(v -> {
+            String username = tvUsername.getText().toString().trim();
+            String email = tvEmail.getText().toString().trim();
+            String password = tvPass.getText().toString().trim();
+        });
         Toast.makeText(this, "Registro Completado", Toast.LENGTH_SHORT).show();
     }
     @Override
