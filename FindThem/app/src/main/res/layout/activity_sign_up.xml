@@ -138,12 +138,11 @@
                 android:layout_height="20dp"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/SignInBtn"
+                android:id="@+id/BtnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Sign In"
-                app:cornerRadius="32dp"
-                android:onClick="LargeBtn"/>
+                app:cornerRadius="32dp"/>
 
             <View
                 android:layout_width="wrap_content"

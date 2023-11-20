@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -18,6 +19,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.ktx.Firebase;
 import com.rafac183.findthem.R;
@@ -43,11 +47,17 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         tvEmail = binding.tvEmail;
         tvUsername = binding.tvUsername;
         tvPass = binding.tvPass;
-        signIn = binding.SignInBtn;
+        signIn = binding.BtnSignIn;
         authentication = FirebaseAuth.getInstance();
 
         /*---------Methods--------*/
         Hilos();
+        Btns();
+
+        if(authentication.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),NavigationActivity.class));
+            finish();
+        }
     }
 
 
@@ -59,13 +69,38 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
     }
 
     /*-------------Button Create Account------------*/
-    public void LargeBtn() {
+    public void Btns() {
         signIn.setOnClickListener(v -> {
             String username = tvUsername.getText().toString().trim();
             String email = tvEmail.getText().toString().trim();
             String password = tvPass.getText().toString().trim();
+
+            if(TextUtils.isEmpty(email)){
+                tvEmail.setError("Email is required");
+                return;
+            }
+            if (TextUtils.isEmpty(password)) {
+                tvPass.setError("Password is required");
+            }
+            if(password.length() < 6){
+                tvPass.setError("Password must be at least 6 characters");
+                return;
+            }
+
+            //Firebase
+            authentication.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         });
-        Toast.makeText(this, "Registro Completado", Toast.LENGTH_SHORT).show();
     }
     @Override
     public void SendImg() {

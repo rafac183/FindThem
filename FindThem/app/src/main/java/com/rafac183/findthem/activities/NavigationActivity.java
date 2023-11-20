@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
 import com.rafac183.findthem.services.ProximityService;
@@ -111,6 +112,7 @@ public class NavigationActivity extends AppCompatActivity {
             return true;
         });
         menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
+            FirebaseAuth.getInstance().signOut();
             Intent myIntent = new Intent(NavigationActivity.this, LoginActivity.class);
             startActivity(myIntent);
             finish();
@@ -135,9 +137,9 @@ public class NavigationActivity extends AppCompatActivity {
 
     public void getUserName(){
         String uName = getIntent().getStringExtra("user");
-        String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
+        //String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
-        tvUsername.setText(username);
+        tvUsername.setText(uName);
     }
 
     @Override
