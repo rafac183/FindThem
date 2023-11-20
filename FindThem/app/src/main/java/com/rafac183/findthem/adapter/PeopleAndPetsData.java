@@ -1,5 +1,6 @@
 package com.rafac183.findthem.adapter;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
@@ -9,6 +10,7 @@ public class PeopleAndPetsData {
 
     static ArrayList<PeopleModel> peopleList = new ArrayList<>();
     static ArrayList<PetsModel> petsList = new ArrayList<>();
+    FirebaseFirestore authstore = FirebaseFirestore.getInstance();
 
     public static ArrayList<PeopleModel> getPeopleList() {
         peopleList.clear();
