@@ -20,19 +20,28 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rafac183.findthem.databinding.ActivityLoginBinding;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.interfaces.ActivityInterface;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements ActivityInterface {
     private ActivityLoginBinding binding;
     private EditText tvEmail, tvUsername, tvPass;
     private Button login;
     private FirebaseAuth authentication;
+    private FirebaseFirestore authStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +51,13 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        tvEmail = binding.textUser;
         tvUsername = binding.textUser;
         tvPass = binding.textPass;
         login = binding.BtnLogin;
 
         authentication = FirebaseAuth.getInstance();
+        authentication.signOut();
+        authStore = FirebaseFirestore.getInstance();
 
         /*----------Methods----------*/
         Hilos();
@@ -57,43 +67,50 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
 
     /*------------Button If the user dont have account---------*/
     public void DontHaveAccount(View v){
-        Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivity(myIntent);
+        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
     }
 
     /*-----------Button Login-----------*/
     public void Btns(){
         login.setOnClickListener(v -> {
             String username = tvUsername.getText().toString().trim();
-            String email = tvEmail.getText().toString().trim();
             String password = tvPass.getText().toString().trim();
+            String[] email = new String[1];
 
-            if(TextUtils.isEmpty(email)){
-                tvEmail.setError("Email is required");
-                return;
-            }
             if (TextUtils.isEmpty(password)) {
                 tvPass.setError("Password is required");
             }
-            if(password.length() < 6){
-                tvPass.setError("Password must be at least 6 characters");
-                return;
-            }
-            authentication.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            authStore.collection("users").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Logged is Successfully", Toast.LENGTH_SHORT).show();
-                        Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
-                        myIntent.putExtra("mostrarProgressBar", true);
-                        myIntent.putExtra("user", username);
-                        startActivity(myIntent);
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        for (QueryDocumentSnapshot document :task.getResult()){
+                            email[0] = document.get("email").toString();
+                        }
+                        authentication.signInWithEmailAndPassword(email[0], password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(LoginActivity.this, "Logged is Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
+                                    myIntent.putExtra("mostrarProgressBar", true);
+                                    myIntent.putExtra("user", username);
+                                    startActivity(myIntent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    finish();
+                }
             });
+
         });
     }
 

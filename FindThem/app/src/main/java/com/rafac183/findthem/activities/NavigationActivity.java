@@ -137,9 +137,9 @@ public class NavigationActivity extends AppCompatActivity {
 
     public void getUserName(){
         String uName = getIntent().getStringExtra("user");
-        //String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
+        String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
-        tvUsername.setText(uName);
+        tvUsername.setText(username);
     }
 
     @Override

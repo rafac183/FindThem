@@ -1,5 +1,7 @@
 package com.rafac183.findthem.activities;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,13 +23,20 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySignUpBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity implements ActivityInterface {
 
@@ -34,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
     private EditText tvEmail, tvUsername, tvPass;
     private Button signIn;
     private FirebaseAuth authentication;
+    private FirebaseFirestore authStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         tvPass = binding.tvPass;
         signIn = binding.BtnSignIn;
         authentication = FirebaseAuth.getInstance();
+        authStore = FirebaseFirestore.getInstance();
 
         /*---------Methods--------*/
         Hilos();
@@ -74,7 +86,9 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
             String username = tvUsername.getText().toString().trim();
             String email = tvEmail.getText().toString().trim();
             String password = tvPass.getText().toString().trim();
-
+            Map<String, Object> user = new HashMap<>();
+            user.put("username",username);
+            user.put("email",email);
             if(TextUtils.isEmpty(email)){
                 tvEmail.setError("Email is required");
                 return;
@@ -86,20 +100,31 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
                 tvPass.setError("Password must be at least 6 characters");
                 return;
             }
-
-            //Firebase
-            authentication.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            //FireStore
+            authStore.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                public void onSuccess(DocumentReference documentReference) {
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    finish();
                 }
             });
+
+            //Firebase Authentication
+            authentication.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
         });
     }
     @Override
