@@ -30,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySignUpBinding;
@@ -86,45 +88,48 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
             String username = tvUsername.getText().toString().trim();
             String email = tvEmail.getText().toString().trim();
             String password = tvPass.getText().toString().trim();
-            Map<String, Object> user = new HashMap<>();
-            user.put("username",username);
-            user.put("email",email);
+
             if(TextUtils.isEmpty(email)){
                 tvEmail.setError("Email is required");
-                return;
+            }
+            if(TextUtils.isEmpty(username)){
+                tvUsername.setError("Username is required");
             }
             if (TextUtils.isEmpty(password)) {
                 tvPass.setError("Password is required");
             }
-            if(password.length() < 6){
+            else if(password.length() < 6){
                 tvPass.setError("Password must be at least 6 characters");
-                return;
             }
-            //FireStore
-            authStore.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            authStore.collection("users").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    finish();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    finish();
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()){
+                        if (task.getResult().isEmpty()) {
+                            create(username, email, password);
+                        }else {
+                            tvUsername.setError("Registered Username");
+                        }
+                    }
                 }
             });
+        });
+    }
 
-            //Firebase Authentication
-            authentication.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(SignUpActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
+    private void create(String username, String email, String password) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("username",username);
+        user.put("email",email);
+        //Firebase Authentication
+        authentication.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                authStore.collection("users").add(user).addOnSuccessListener(documentReference -> finish()).addOnFailureListener(e -> finish());
+                Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                finish();
+            } else {
+                Toast.makeText(SignUpActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
     @Override

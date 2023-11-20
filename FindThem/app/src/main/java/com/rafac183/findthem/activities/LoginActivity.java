@@ -77,40 +77,43 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
             String password = tvPass.getText().toString().trim();
             String[] email = new String[1];
 
+            if(TextUtils.isEmpty(username)){
+                tvUsername.setError("Please enter a username");
+            }
             if (TextUtils.isEmpty(password)) {
                 tvPass.setError("Password is required");
             }
-            authStore.collection("users").whereEqualTo("username", username).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()){
+            authStore.collection("users").whereEqualTo("username", username).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    if (!task.getResult().isEmpty()) {
                         for (QueryDocumentSnapshot document :task.getResult()){
                             email[0] = document.get("email").toString();
                         }
-                        authentication.signInWithEmailAndPassword(email[0], password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    Toast.makeText(LoginActivity.this, "Logged is Successfully", Toast.LENGTH_SHORT).show();
-                                    Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
-                                    myIntent.putExtra("mostrarProgressBar", true);
-                                    myIntent.putExtra("user", username);
-                                    startActivity(myIntent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                        login(username, email, password);
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Unregistered User", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    finish();
-                }
-            });
+            }).addOnFailureListener(e -> finish());
 
+        });
+    }
+
+    private void login(String username, String[] email, String password){
+        authentication.signInWithEmailAndPassword(email[0], password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "Logged is Successfully", Toast.LENGTH_SHORT).show();
+                    Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
+                    myIntent.putExtra("mostrarProgressBar", true);
+                    myIntent.putExtra("user", username);
+                    startActivity(myIntent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 
