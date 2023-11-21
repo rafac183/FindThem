@@ -96,7 +96,7 @@ public class SplashActivity extends Activity implements ActivityInterface {
 
     @Override
     public void Hilos() {
-        new Thread(() -> SendImg());
+        new Thread(() -> SendImg()).start();
     }
 
 }

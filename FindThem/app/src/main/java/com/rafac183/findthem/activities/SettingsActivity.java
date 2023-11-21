@@ -59,6 +59,6 @@ public class SettingsActivity extends AppCompatActivity implements ActivityInter
 
     @Override
     public void Hilos() {
-        new Thread(() -> SendImg());
+        new Thread(() -> SendImg()).start();
     }
 }

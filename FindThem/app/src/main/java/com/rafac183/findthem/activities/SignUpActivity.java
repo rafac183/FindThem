@@ -65,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         authStore = FirebaseFirestore.getInstance();
 
         /*---------Methods--------*/
+        SendIcon();
         Hilos();
         Btns();
 
@@ -132,9 +133,7 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
             }
         });
     }
-    @Override
-    public void SendImg() {
-        String bg = "https://i.ibb.co/LzNt7W9/bg.png";
+    public void SendIcon(){
         String face = "https://i.ibb.co/GVV045F/facebook.png";
         String git = "https://i.ibb.co/Fwx0HWm/github.png";
         String tw = "https://i.ibb.co/tHDNvQh/twitter.png";
@@ -142,6 +141,10 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
         Glide.with(this).load(face).into(binding.ivFace);
         Glide.with(this).load(git).into(binding.ivGit);
         Glide.with(this).load(tw).into(binding.ivTw);
+    }
+    @Override
+    public void SendImg() {
+        String bg = "https://i.ibb.co/LzNt7W9/bg.png";
 
         Glide.with(this)
                 .load(bg)
@@ -162,6 +165,6 @@ public class SignUpActivity extends AppCompatActivity implements ActivityInterfa
     }
 
     public void Hilos(){
-        new Thread(() -> SendImg());
+        new Thread(() -> SendImg()).start();
     }
 }

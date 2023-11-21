@@ -79,7 +79,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void Hilos() {
-        new Thread(() -> SendImg());
+        new Thread(() -> SendImg()).start();
     }
 
 
