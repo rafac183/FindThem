@@ -20,25 +20,19 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.rafac183.findthem.databinding.ActivityLoginBinding;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.interfaces.ActivityInterface;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 public class LoginActivity extends AppCompatActivity implements ActivityInterface {
     private ActivityLoginBinding binding;
-    private EditText tvEmail, tvUsername, tvPass;
+    private EditText tvUsername, tvPass;
     private Button login;
     private FirebaseAuth authentication;
     private FirebaseFirestore authStore;
@@ -109,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityInterfac
                     Intent myIntent = new Intent(LoginActivity.this, SplashActivity.class);
                     myIntent.putExtra("mostrarProgressBar", true);
                     myIntent.putExtra("user", username);
+
                     startActivity(myIntent);
                     finish();
                 } else {

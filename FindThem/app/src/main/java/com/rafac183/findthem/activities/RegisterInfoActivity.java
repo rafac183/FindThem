@@ -1,5 +1,6 @@
 package com.rafac183.findthem.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -15,12 +16,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
 
 public class RegisterInfoActivity extends AppCompatActivity implements ActivityInterface {
     private ActivityRegisterInfoBinding binding;
+    private MaterialButton exit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +33,11 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
         binding = ActivityRegisterInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        exit = binding.exit;
+
         /*--------Methods--------*/
         Hilos();
+        Btns();
     }
 
     public void LargeBtn(View v) {
@@ -61,5 +67,12 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
     @Override
     public void Hilos() {
         new Thread(() -> SendImg()).start();
+    }
+
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));
+            finish();
+        });
     }
 }

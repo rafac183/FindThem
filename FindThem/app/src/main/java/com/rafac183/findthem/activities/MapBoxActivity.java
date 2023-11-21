@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -66,7 +68,7 @@ public class MapBoxActivity extends AppCompatActivity {
     private Point point;
     private DatabaseReference reference = null;
     private ShareLocation location;
-    private MaterialButton shareLocation;
+    private MaterialButton shareLocation, exit;
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean o) {
@@ -116,9 +118,14 @@ public class MapBoxActivity extends AppCompatActivity {
         mapView = binding.mapView;
         floatingActionButton = binding.myLocation;
         shareLocation = binding.shareLocation;
+        exit = binding.exit;
 
         location = new ShareLocation();
 
+        /*---------------Methods------------------*/
+        Btns();
+
+        /*------------MapBox------------*/
         if (ActivityCompat.checkSelfPermission(MapBoxActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -246,5 +253,12 @@ public class MapBoxActivity extends AppCompatActivity {
                 Toast.makeText(activityRef.get(), "Locations not Loaded", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(MapBoxActivity.this, NavigationActivity.class));
+            finish();
+        });
     }
 }

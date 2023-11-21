@@ -21,6 +21,7 @@ import com.rafac183.findthem.activities.SettingsActivity;
 import com.rafac183.findthem.activities.ShareActivity;
 import com.rafac183.findthem.databinding.FragmentHomeBinding;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HomeFragment extends Fragment {
@@ -100,18 +101,22 @@ public class HomeFragment extends Fragment {
             case "Profile":
                 intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
+                requireActivity().finish();
                 break;
             case "Rate Us":
                 intent = new Intent(getActivity(), RateUsActivity.class);
                 startActivity(intent);
+                requireActivity().finish();
                 break;
             case "Share":
                 intent = new Intent(getActivity(), ShareActivity.class);
                 startActivity(intent);
+                requireActivity().finish();
                 break;
             case "Settings":
                 intent = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(intent);
+                requireActivity().finish();
                 break;
         }
     }

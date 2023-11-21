@@ -16,5 +16,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:textAlignment="center"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="1"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

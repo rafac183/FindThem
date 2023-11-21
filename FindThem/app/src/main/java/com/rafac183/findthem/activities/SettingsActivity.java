@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivitySettingsBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
@@ -22,6 +24,7 @@ import com.rafac183.findthem.interfaces.ActivityInterface;
 public class SettingsActivity extends AppCompatActivity implements ActivityInterface {
 
     private ActivitySettingsBinding binding;
+    private MaterialButton exit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Window window = getWindow();
@@ -30,12 +33,11 @@ public class SettingsActivity extends AppCompatActivity implements ActivityInter
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        exit = binding.exit;
+
         /*-----------Methods------------*/
         Hilos();
-    }
-
-    public void LargeBtn(View v) {
-        Toast.makeText(binding.rlParent.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
+        Btns();
     }
 
     @Override
@@ -60,5 +62,12 @@ public class SettingsActivity extends AppCompatActivity implements ActivityInter
     @Override
     public void Hilos() {
         new Thread(() -> SendImg()).start();
+    }
+
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, NavigationActivity.class));
+            finish();
+        });
     }
 }

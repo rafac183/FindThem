@@ -3,17 +3,20 @@ package com.rafac183.findthem.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRateUsBinding;
 
 public class RateUsActivity extends AppCompatActivity {
 
     private ActivityRateUsBinding binding;
+    private MaterialButton exit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Window window = getWindow();
@@ -22,8 +25,11 @@ public class RateUsActivity extends AppCompatActivity {
         binding = ActivityRateUsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        exit = binding.exit;
+
         /*--------Methods----------*/
         SubmitRating();
+        Btns();
         binding.tvRateUs.setText("Rate Us!");
     }
 
@@ -58,6 +64,13 @@ public class RateUsActivity extends AppCompatActivity {
                         break;
                 }
             }
+        });
+    }
+
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(RateUsActivity.this, NavigationActivity.class));
+            finish();
         });
     }
 }

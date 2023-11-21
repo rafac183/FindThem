@@ -1,18 +1,17 @@
 package com.rafac183.findthem.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,8 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityNavigationBinding;
 import com.rafac183.findthem.services.ProximityService;
-import com.rafac183.findthem.ui.home.HomeFragment;
-import com.rafac183.findthem.ui.home.HomeViewModel;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -109,6 +106,7 @@ public class NavigationActivity extends AppCompatActivity {
         menuNV.findItem(R.id.nav_map).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, MapBoxActivity.class);
             startActivity(myIntent);
+            finish();
             return true;
         });
         menuNV.findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
@@ -121,23 +119,37 @@ public class NavigationActivity extends AppCompatActivity {
         menuNV.findItem(R.id.nav_profile).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, ProfileActivity.class);
             startActivity(myIntent);
+            finish();
             return true;
         });
         menuNV.findItem(R.id.nav_rate_us).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, RateUsActivity.class);
             startActivity(myIntent);
+            finish();
             return true;
         });
         menuNV.findItem(R.id.nav_share).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, ShareActivity.class);
             startActivity(myIntent);
+            finish();
             return true;
         });
     }
 
     public void getUserName(){
+        SharedPreferences preferences = getSharedPreferences("username", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
         String uName = getIntent().getStringExtra("user");
-        String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
+        String username = "";
+        //String username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
+        if (uName != null){
+            username = uName.substring(0, 1).toUpperCase() + uName.substring(1);
+            editor.putString("userN", username);
+            editor.apply();
+        } else {
+            username = preferences.getString("userN", "UserName");
+        }
         TextView tvUsername = binding.navView.getHeaderView(0).findViewById(R.id.textViewUser);
         tvUsername.setText(username);
     }

@@ -1,5 +1,6 @@
 package com.rafac183.findthem.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
@@ -24,6 +26,7 @@ import com.rafac183.findthem.interfaces.ActivityInterface;
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
 
     private ActivityPetRegisterBinding binding;
+    private MaterialButton exit;
     String[] gender = {"Masculino", "Femenino"};
 
     @Override
@@ -34,8 +37,11 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         binding = ActivityPetRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        exit = binding.exit;
+
         /*--------Methods--------*/
         Hilos();
+        Btns();
 
         binding.spinnerGender.setOnItemSelectedListener(this);
 
@@ -82,5 +88,10 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         new Thread(() -> SendImg()).start();
     }
 
-
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(PetRegisterActivity.this, NavigationActivity.class));
+            finish();
+        });
+    }
 }
