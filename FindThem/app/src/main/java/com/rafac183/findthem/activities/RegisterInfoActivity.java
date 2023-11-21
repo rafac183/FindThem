@@ -60,6 +60,6 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
 
     @Override
     public void Hilos() {
-        new Thread(() -> SendImg());
+        new Thread(() -> SendImg()).start();
     }
 }
