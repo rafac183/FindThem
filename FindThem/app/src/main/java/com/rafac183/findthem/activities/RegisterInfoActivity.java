@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,9 +23,10 @@ import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
 
-public class RegisterInfoActivity extends AppCompatActivity implements ActivityInterface {
+public class RegisterInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
     private ActivityRegisterInfoBinding binding;
     private MaterialButton exit;
+    String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
         /*--------Methods--------*/
         Hilos();
         Btns();
+        Spinner();
     }
 
     public void LargeBtn(View v) {
@@ -74,5 +78,24 @@ public class RegisterInfoActivity extends AppCompatActivity implements ActivityI
             startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));
             finish();
         });
+    }
+    private void Spinner(){
+        binding.spinnerGender.setOnItemSelectedListener(this);
+
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gender);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        binding.spinnerGender.setAdapter(aa);
+        binding.spinnerGender.setSelection(0, false);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

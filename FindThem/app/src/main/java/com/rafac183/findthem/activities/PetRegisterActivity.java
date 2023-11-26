@@ -3,6 +3,7 @@ package com.rafac183.findthem.activities;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -26,8 +27,8 @@ import com.rafac183.findthem.interfaces.ActivityInterface;
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
 
     private ActivityPetRegisterBinding binding;
-    private MaterialButton exit;
-    String[] gender = {"Masculino", "Femenino"};
+    private MaterialButton exit, enterData;
+    String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,28 +39,15 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         setContentView(binding.getRoot());
 
         exit = binding.exit;
+        enterData = binding.enterData;
 
         /*--------Methods--------*/
         Hilos();
         Btns();
-
-        binding.spinnerGender.setOnItemSelectedListener(this);
-
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, gender);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        binding.spinnerGender.setAdapter(aa);
+        Spinner();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
     public void LargeBtn(View v) {
         Toast.makeText(binding.rlParent.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
     }
@@ -89,9 +77,40 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void Btns(){
+        enterData.setOnClickListener(v -> {
+            String name = binding.edNamePet.getText().toString().trim();
+            String codeStr = binding.edCodePet.getText().toString();
+            Integer code;
+            if (TextUtils.isEmpty(name)) {
+                binding.edNamePet.setError("Enter a Name");
+            }
+            if (TextUtils.isEmpty(codeStr)) {
+                binding.edCodePet.setError("Enter a Code");
+            } else {
+                code = Integer.valueOf(codeStr);
+            }
+        });
         exit.setOnClickListener(v -> {
             startActivity(new Intent(PetRegisterActivity.this, NavigationActivity.class));
             finish();
         });
+    }
+    private void Spinner(){
+        binding.spinnerGender.setOnItemSelectedListener(this);
+
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, gender);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        binding.spinnerGender.setAdapter(aa);
+        binding.spinnerGender.setSelection(0, false);
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
