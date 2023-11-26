@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,15 +20,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
 
     private ActivityPetRegisterBinding binding;
     private MaterialButton exit, enterData;
+    private FirebaseFirestore authStore;
     String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
@@ -40,6 +48,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
 
         exit = binding.exit;
         enterData = binding.enterData;
+        authStore = FirebaseFirestore.getInstance();
 
         /*--------Methods--------*/
         Hilos();
@@ -80,14 +89,27 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         enterData.setOnClickListener(v -> {
             String name = binding.edNamePet.getText().toString().trim();
             String codeStr = binding.edCodePet.getText().toString();
-            Integer code;
+            int code;
             if (TextUtils.isEmpty(name)) {
                 binding.edNamePet.setError("Enter a Name");
             }
             if (TextUtils.isEmpty(codeStr)) {
                 binding.edCodePet.setError("Enter a Code");
+            }
+            if (binding.spinnerGender.getSelectedItemPosition() == 0) {
+                View selectedView = binding.spinnerGender.getSelectedView();
+                if (selectedView instanceof TextView) {
+                    ((TextView) selectedView).setError("Select a Gender");
+                }
             } else {
-                code = Integer.valueOf(codeStr);
+                code = Integer.parseInt(codeStr);
+                Object selectedGender = binding.spinnerGender.getSelectedItem();
+                Map<String, Object> pet = new HashMap<>();
+                pet.put("name",name);
+                pet.put("code",code);
+                pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
+                authStore.collection("pets").add(pet).addOnSuccessListener(documentReference -> finish()).addOnFailureListener(e -> finish());
+                Toast.makeText(this, "Pet Created", Toast.LENGTH_SHORT).show();
             }
         });
         exit.setOnClickListener(v -> {
@@ -105,12 +127,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         binding.spinnerGender.setSelection(0, false);
     }
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 }

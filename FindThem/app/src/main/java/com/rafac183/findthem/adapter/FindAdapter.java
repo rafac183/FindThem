@@ -26,7 +26,7 @@ public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
         this.onClickListener = onClickListener;
 
         // Establecer la condición para determinar cuál lista se usará
-        isPeopleList = peopleList != null && !peopleList.isEmpty();
+        isPeopleList = peopleList != null && petsList == null;
     }
 
     @NonNull

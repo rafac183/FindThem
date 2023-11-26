@@ -3,10 +3,12 @@ package com.rafac183.findthem.activities;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,13 +21,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
     private ActivityRegisterInfoBinding binding;
-    private MaterialButton exit;
+    private MaterialButton exit, enterData;
+    private FirebaseFirestore authStore;
     String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
@@ -37,6 +44,8 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
         setContentView(binding.getRoot());
 
         exit = binding.exit;
+        enterData = binding.enterData;
+        authStore = FirebaseFirestore.getInstance();
 
         /*--------Methods--------*/
         Hilos();
@@ -74,6 +83,36 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void Btns(){
+        enterData.setOnClickListener(v -> {
+            String name = binding.edName.getText().toString().trim();
+            String lastname = binding.edLastName.getText().toString().trim();
+            String phone = binding.edPhone.getText().toString().trim();
+            int code;
+            if (TextUtils.isEmpty(name)) {
+                binding.edName.setError("Enter a Name");
+            }
+            if (TextUtils.isEmpty(lastname)) {
+                binding.edLastName.setError("Enter a Last Name");
+            }
+            if (TextUtils.isEmpty(phone)) {
+                binding.edPhone.setError("Enter a Phone");
+            }
+            if (binding.spinnerGender.getSelectedItemPosition() == 0) {
+                View selectedView = binding.spinnerGender.getSelectedView();
+                if (selectedView instanceof TextView) {
+                    ((TextView) selectedView).setError("Select a Gender");
+                }
+            } else {
+                Object selectedGender = binding.spinnerGender.getSelectedItem();
+                Map<String, Object> pet = new HashMap<>();
+                pet.put("name",name);
+                pet.put("lastname",lastname);
+                pet.put("phone",phone);
+                pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
+                authStore.collection("people").add(pet).addOnSuccessListener(documentReference -> finish()).addOnFailureListener(e -> finish());
+                Toast.makeText(this, "Person Created", Toast.LENGTH_SHORT).show();
+            }
+        });
         exit.setOnClickListener(v -> {
             startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));
             finish();

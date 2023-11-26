@@ -55,7 +55,7 @@ public class PeopleFragment extends Fragment implements FindInterface {
     }
     @Override
     public void onCLickCV(PeopleModel peopleModel, PetsModel petsModel) {
-        Toast.makeText(binding.recyclerFragmentPeople.getContext(), "Estamos Trabajando en Modificaciones! No Desespere!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(binding.recyclerFragmentPeople.getContext(), "Estamos Trabajando en Modificaciones! No Desespere! " + peopleModel.getName(), Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onClickAdd() {

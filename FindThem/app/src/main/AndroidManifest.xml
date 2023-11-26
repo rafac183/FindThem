@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.PROXIMITY_SCREEN_OFF_WAKE_LOCK" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,13 +20,18 @@
         android:theme="@style/Base.Theme.FindThem"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
-        </activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".activities.SignUpActivity"
             android:exported="false" />
@@ -41,13 +45,13 @@
             android:name=".activities.NavigationActivity"
             android:exported="true"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/Base.Theme.FindThem.NoActionBar" >
+            android:theme="@style/Base.Theme.FindThem.NoActionBar">
             <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false" />

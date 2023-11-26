@@ -1,35 +1,67 @@
 package com.rafac183.findthem.adapter;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PeopleAndPetsData {
 
     static ArrayList<PeopleModel> peopleList = new ArrayList<>();
     static ArrayList<PetsModel> petsList = new ArrayList<>();
-    FirebaseFirestore authstore = FirebaseFirestore.getInstance();
+    static FirebaseFirestore authStore = FirebaseFirestore.getInstance();
+    static String imgUrl;
 
     public static ArrayList<PeopleModel> getPeopleList() {
         peopleList.clear();
-        peopleList.add(new PeopleModel("Person 1", "Description 1", "https://i.ibb.co/NyVJjTp/registered-People.png"));
-        peopleList.add(new PeopleModel("Person 2", "Description 2", "https://i.ibb.co/ggQPSnb/datosmascota.png"));
-        peopleList.add(new PeopleModel("Person 3", "Description 3", "https://i.ibb.co/c8fbs3r/datospersonales.png"));
-        peopleList.add(new PeopleModel("Person 4", "Description 4", "https://i.ibb.co/xS5V4xR/rateusicon.png"));
-        peopleList.add(new PeopleModel("Person 5", "Description 5", "https://i.ibb.co/FqQFNBS/shareicon.png"));
-        peopleList.add(new PeopleModel("Person 6", "Description 6", "https://i.ibb.co/d7jJcxP/settingsicon.png"));
+        authStore.collection("people").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (!task.getResult().isEmpty()) {
+                    for (QueryDocumentSnapshot snapshot : task.getResult()) {
+                        String name = snapshot.get("name").toString();
+                        String lastname = snapshot.get("lastname").toString();
+                        String completeName = name + " " + lastname;
+                        String phone = snapshot.get("phone").toString();
+                        String gender = snapshot.get("gender").toString();
+                        if (gender.equals("Male")) {
+                            imgUrl = "https://i.ibb.co/bPkhJ1Y/hombre.png";
+                        } else {
+                            imgUrl = "https://i.ibb.co/qpwM05w/mujer.png";
+                        }
+                        peopleList.add(new PeopleModel(completeName, phone + "\n" + gender, imgUrl));
+                    }
+                }
+            }
+        });
         return peopleList;
     }
     public static ArrayList<PetsModel> getPetsList() {
         petsList.clear();
-        petsList.add(new PetsModel("Pet 1", "Description 1", "https://i.ibb.co/NyVJjTp/registered-People.png"));
-        petsList.add(new PetsModel("Pet 2", "Description 2", "https://i.ibb.co/ggQPSnb/datosmascota.png"));
-        petsList.add(new PetsModel("Pet 3", "Description 3", "https://i.ibb.co/c8fbs3r/datospersonales.png"));
-        petsList.add(new PetsModel("Pet 4", "Description 4", "https://i.ibb.co/xS5V4xR/rateusicon.png"));
-        petsList.add(new PetsModel("Pet 5", "Description 5", "https://i.ibb.co/FqQFNBS/shareicon.png"));
-        petsList.add(new PetsModel("Pet 6", "Description 6", "https://i.ibb.co/d7jJcxP/settingsicon.png"));
+        authStore.collection("pets").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (!task.getResult().isEmpty()){
+                    for (QueryDocumentSnapshot snapshot : task.getResult()){
+                        String name = snapshot.get("name").toString();
+                        String code = snapshot.get("code").toString();
+                        String gender = snapshot.get("gender").toString();
+                        if (gender.equals("Male")){
+                            imgUrl = "https://i.ibb.co/87Vq8hB/lindo-perro-estudio-removebg-preview.png";
+                        } else {
+                            imgUrl = "https://i.ibb.co/Zc7Z5zy/adorable-cachorro-estudio-removebg-preview.png";
+                        }
+                        petsList.add(new PetsModel(name, code, imgUrl));
+                    }
+                }
+            }
+        });
         return petsList;
     }
 }
