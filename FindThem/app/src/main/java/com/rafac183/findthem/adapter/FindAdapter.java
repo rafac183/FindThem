@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
     private final ArrayList<PeopleModel> peopleList;
     private final ArrayList<PetsModel> petsList;
-    private final FindInterface onClickListener;
+    private final FindInterface onClickBtns;
     private boolean isPeopleList;
 
-    public FindAdapter(ArrayList<PeopleModel> peopleList, ArrayList<PetsModel> petsList, FindInterface onClickListener) {
+    public FindAdapter(ArrayList<PeopleModel> peopleList, ArrayList<PetsModel> petsList, FindInterface onClickBtns) {
         this.peopleList = peopleList;
         this.petsList = petsList;
-        this.onClickListener = onClickListener;
+        this.onClickBtns = onClickBtns;
 
         // Establecer la condición para determinar cuál lista se usará
         isPeopleList = peopleList != null && petsList == null;
@@ -40,10 +40,10 @@ public class FindAdapter extends RecyclerView.Adapter<FindViewHolder> {
     public void onBindViewHolder(@NonNull FindViewHolder holder, int position) {
         if(peopleList == null){
             PetsModel petsModel = petsList.get(position);
-            holder.RenderPets(petsModel, onClickListener);
+            holder.RenderPets(petsModel, onClickBtns);
         } else {
             PeopleModel peopleModel = peopleList.get(position);
-            holder.RenderPeople(peopleModel, onClickListener);
+            holder.RenderPeople(peopleModel, onClickBtns);
         }
     }
 

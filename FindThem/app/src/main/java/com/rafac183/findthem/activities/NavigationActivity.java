@@ -134,12 +134,6 @@ public class NavigationActivity extends AppCompatActivity {
             finish();
             return true;
         });
-        menuNV.findItem(R.id.nav_list).setOnMenuItemClickListener(item -> {
-            Intent myIntent = new Intent(NavigationActivity.this, ListActivity.class);
-            startActivity(myIntent);
-            finish();
-            return true;
-        });
         menuNV.findItem(R.id.nav_img).setOnMenuItemClickListener(item -> {
             Intent myIntent = new Intent(NavigationActivity.this, ImageActivity.class);
             startActivity(myIntent);

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
@@ -108,8 +109,15 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
                 pet.put("name",name);
                 pet.put("code",code);
                 pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
-                authStore.collection("pets").add(pet).addOnSuccessListener(documentReference -> finish()).addOnFailureListener(e -> finish());
-                Toast.makeText(this, "Pet Created", Toast.LENGTH_SHORT).show();
+                authStore.collection("pets").add(pet).addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Pet Created", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
+                    finish();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
+                    finish();
+                });
             }
         });
         exit.setOnClickListener(v -> {

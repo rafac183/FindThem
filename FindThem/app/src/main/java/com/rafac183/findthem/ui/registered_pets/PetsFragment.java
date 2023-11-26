@@ -21,6 +21,7 @@ import com.rafac183.findthem.databinding.FragmentPetsBinding;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PetsFragment extends Fragment implements FindInterface {
 
@@ -34,6 +35,16 @@ public class PetsFragment extends Fragment implements FindInterface {
 
         /*--------------Methods--------------*/
         petsViewModel.getPetsData().observe(getViewLifecycleOwner(), this::initRecyclerView);
+
+        petsViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                binding.chargingScreen.setVisibility(View.VISIBLE);
+                binding.fabPets.setVisibility(View.GONE);
+            } else {
+                binding.chargingScreen.setVisibility(View.GONE);
+                binding.fabPets.setVisibility(View.VISIBLE);
+            }
+        });
         onClickAdd();
 
         return root;
@@ -55,14 +66,20 @@ public class PetsFragment extends Fragment implements FindInterface {
     }
 
     @Override
-    public void onCLickCV(PeopleModel peopleModel, PetsModel petsModel) {
-        Toast.makeText(binding.recyclerFragmentPets.getContext(), "Estamos Trabajando en Modificaciones! No Desespere! " + petsModel.getName(), Toast.LENGTH_SHORT).show();
+    public void onCLickUpdate(PeopleModel peopleModel, PetsModel petsModel) {
+        Toast.makeText(getContext(), "Modificado", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCLickDelete(PeopleModel peopleModel, PetsModel petsModel) {
+        Toast.makeText(getContext(), "Eliminado", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickAdd() {
         binding.fabPets.setOnClickListener(view -> {
-            Intent myIntent = new Intent(binding.fabPets.getContext(), PetRegisterActivity.class);
+            Intent myIntent = new Intent(getContext(), PetRegisterActivity.class);
             startActivity(myIntent);
+            requireActivity().finish();
         });
     }
 }

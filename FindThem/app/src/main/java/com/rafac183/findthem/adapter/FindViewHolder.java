@@ -18,19 +18,21 @@ public class FindViewHolder extends RecyclerView.ViewHolder {
         binding = CardViewRegisteredBinding.bind(item);
     }
 
-    public void RenderPeople(PeopleModel persons, FindInterface onclick) {
+    public void RenderPeople(PeopleModel persons, FindInterface onClickBtns) {
         binding.textViewName.setText(persons.getName());
         binding.textViewDescription.setText(persons.getDescription());
         Glide.with(binding.imageViewRegistered.getContext()).load(persons.getImage()).into(binding.imageViewRegistered);
 
-        binding.cardViewRegistered.setOnClickListener(v -> onclick.onCLickCV(persons, null));
+        binding.btnEdit.setOnClickListener(v -> onClickBtns.onCLickUpdate(persons, null));
+        binding.btnDelete.setOnClickListener(v -> onClickBtns.onCLickDelete(persons, null));
     }
 
-    public void RenderPets(PetsModel pets, FindInterface onclick) {
+    public void RenderPets(PetsModel pets, FindInterface onClickBtns) {
         binding.textViewName.setText(pets.getName());
         binding.textViewDescription.setText(pets.getDescription());
         Glide.with(binding.imageViewRegistered.getContext()).load(pets.getImage()).into(binding.imageViewRegistered);
 
-        binding.cardViewRegistered.setOnClickListener(v -> onclick.onCLickCV(null, pets));
+        binding.btnEdit.setOnClickListener(v -> onClickBtns.onCLickUpdate(null, pets));
+        binding.btnDelete.setOnClickListener(v -> onClickBtns.onCLickDelete(null, pets));
     }
 }

@@ -109,8 +109,15 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
                 pet.put("lastname",lastname);
                 pet.put("phone",phone);
                 pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
-                authStore.collection("people").add(pet).addOnSuccessListener(documentReference -> finish()).addOnFailureListener(e -> finish());
-                Toast.makeText(this, "Person Created", Toast.LENGTH_SHORT).show();
+                authStore.collection("people").add(pet).addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Person Created", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
+                    finish();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
+                    finish();
+                });
             }
         });
         exit.setOnClickListener(v -> {

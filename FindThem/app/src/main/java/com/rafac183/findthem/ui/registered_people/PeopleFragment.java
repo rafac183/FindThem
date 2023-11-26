@@ -33,6 +33,16 @@ public class PeopleFragment extends Fragment implements FindInterface {
 
         peopleViewModel.getPeopleData().observe(getViewLifecycleOwner(), this::initRecyclerView);
 
+        peopleViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                binding.chargingScreen.setVisibility(View.VISIBLE);
+                binding.fabPeople.setVisibility(View.GONE);
+            } else {
+                binding.chargingScreen.setVisibility(View.GONE);
+                binding.fabPeople.setVisibility(View.VISIBLE);
+            }
+        });
+
         /*------------Methods------------*/
         onClickAdd();
 
@@ -53,15 +63,23 @@ public class PeopleFragment extends Fragment implements FindInterface {
         binding.recyclerFragmentPeople.setLayoutManager(manager);
         binding.recyclerFragmentPeople.setAdapter(new FindAdapter(peopleList,null, PeopleFragment.this));
     }
+
     @Override
-    public void onCLickCV(PeopleModel peopleModel, PetsModel petsModel) {
-        Toast.makeText(binding.recyclerFragmentPeople.getContext(), "Estamos Trabajando en Modificaciones! No Desespere! " + peopleModel.getName(), Toast.LENGTH_SHORT).show();
+    public void onCLickUpdate(PeopleModel peopleModel, PetsModel petsModel) {
+        Toast.makeText(getContext(), "Modificado", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onCLickDelete(PeopleModel peopleModel, PetsModel petsModel) {
+        Toast.makeText(getContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onClickAdd() {
         binding.fabPeople.setOnClickListener(view -> {
             Intent myIntent = new Intent(binding.fabPeople.getContext(), RegisterInfoActivity.class);
             startActivity(myIntent);
+            requireActivity().finish();
         });
     }
 }
