@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -16,12 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.rafac183.findthem.activities.PetRegisterActivity;
 import com.rafac183.findthem.adapter.FindAdapter;
+import com.rafac183.findthem.dialog.ViewDialogConfirmDelete;
+import com.rafac183.findthem.dialog.ViewDialogUpdate;
 import com.rafac183.findthem.interfaces.FindInterface;
 import com.rafac183.findthem.databinding.FragmentPetsBinding;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PetsFragment extends Fragment implements FindInterface {
 
@@ -34,7 +36,12 @@ public class PetsFragment extends Fragment implements FindInterface {
         View root = binding.getRoot();
 
         /*--------------Methods--------------*/
-        petsViewModel.getPetsData().observe(getViewLifecycleOwner(), this::initRecyclerView);
+        petsViewModel.getPetsData().observe(getViewLifecycleOwner(), new Observer<ArrayList<PetsModel>>() {
+            @Override
+            public void onChanged(ArrayList<PetsModel> petsModels) {
+                initRecyclerView(petsModels);
+            }
+        });
 
         petsViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading) {
@@ -67,12 +74,14 @@ public class PetsFragment extends Fragment implements FindInterface {
 
     @Override
     public void onCLickUpdate(PeopleModel peopleModel, PetsModel petsModel) {
-        Toast.makeText(getContext(), "Modificado", Toast.LENGTH_SHORT).show();
+        ViewDialogUpdate viewDialogUpdate = new ViewDialogUpdate();
+        viewDialogUpdate.showDialogUpdate(requireContext(), petsModel.getId(), petsModel.getName(), null, null, petsModel.getGender(), petsModel.getCode());
     }
 
     @Override
     public void onCLickDelete(PeopleModel peopleModel, PetsModel petsModel) {
-        Toast.makeText(getContext(), "Eliminado", Toast.LENGTH_SHORT).show();
+        ViewDialogConfirmDelete viewDialogConfirmDelete = new ViewDialogConfirmDelete();
+        viewDialogConfirmDelete.showDialogDelete(requireContext(), petsModel.getId(), petsModel.getCode());
     }
 
     public void onClickAdd() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvPet"
+    android:id="@+id/cvUpdatePet"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
@@ -15,12 +15,12 @@
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/edNamePet"
+            android:id="@+id/edNamePetCV"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_margin="3dp"
-            android:background="@color/mapbox_gray"
+            android:background="@drawable/edittext_bg"
             android:gravity="center"
             android:hint="Name"
             android:padding="5dp"
@@ -31,22 +31,22 @@
             android:inputType="textAutoComplete"/>
 
         <Spinner
-            android:id="@+id/spinnerGender"
+            android:id="@+id/spinnerGenderCV"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="3dp"
             android:padding="5dp"
             android:gravity="center"
             android:prompt="@string/app_name"
-            android:background="@color/mapbox_gray"/>
+            android:background="@drawable/spinner_bg"/>
 
         <EditText
-            android:id="@+id/edCodePet"
+            android:id="@+id/edCodePetCV"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_margin="3dp"
-            android:background="@color/mapbox_gray"
+            android:background="@drawable/edittext_bg"
             android:gravity="center"
             android:hint="Code"
             android:padding="5dp"
@@ -57,12 +57,12 @@
             android:inputType="number"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonAdd"
+            android:id="@+id/buttonUpdate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15sp"
-            android:background="@android:color/holo_blue_dark"
-            android:text="Add"
+            android:background="@drawable/btns_blue_bg"
+            android:text="Update"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginTop="5dp"
-            android:background="@android:color/holo_red_light"
+            android:background="@drawable/btns_red_bg"
             android:text="Exit"
             android:textColor="@android:color/white"
             android:textSize="20dp"

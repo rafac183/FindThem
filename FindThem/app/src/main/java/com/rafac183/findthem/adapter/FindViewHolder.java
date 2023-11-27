@@ -19,8 +19,10 @@ public class FindViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void RenderPeople(PeopleModel persons, FindInterface onClickBtns) {
-        binding.textViewName.setText(persons.getName());
-        binding.textViewDescription.setText(persons.getDescription());
+        String completeName = persons.getName() + " " + persons.getLastname();
+        String description = "Gender: " + persons.getGender() + "\nPhone: " + persons.getPhone();
+        binding.textViewName.setText(completeName);
+        binding.textViewDescription.setText(description);
         Glide.with(binding.imageViewRegistered.getContext()).load(persons.getImage()).into(binding.imageViewRegistered);
 
         binding.btnEdit.setOnClickListener(v -> onClickBtns.onCLickUpdate(persons, null));
@@ -28,8 +30,9 @@ public class FindViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void RenderPets(PetsModel pets, FindInterface onClickBtns) {
+        String description = "Gender: " + pets.getGender() + "\nCode: " + pets.getCode();
         binding.textViewName.setText(pets.getName());
-        binding.textViewDescription.setText(pets.getDescription());
+        binding.textViewDescription.setText(description);
         Glide.with(binding.imageViewRegistered.getContext()).load(pets.getImage()).into(binding.imageViewRegistered);
 
         binding.btnEdit.setOnClickListener(v -> onClickBtns.onCLickUpdate(null, pets));

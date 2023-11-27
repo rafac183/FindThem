@@ -27,12 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
-import com.rafac183.findthem.model.PersonModel;
-import com.rafac183.findthem.model.PetModel;
+import com.rafac183.findthem.ui.registered_people.PeopleModel;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
     private ActivityRegisterInfoBinding binding;
@@ -95,6 +92,7 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
             String name = binding.edName.getText().toString().trim();
             String lastname = binding.edLastName.getText().toString().trim();
             String phone = binding.edPhone.getText().toString().trim();
+            String img;
             if (TextUtils.isEmpty(name)) {
                 binding.edName.setError("Enter a Name");
             }
@@ -112,7 +110,12 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
             } else {
                 Object selectedGender = binding.spinnerGender.getSelectedItem();
                 String gender = selectedGender != null ? selectedGender.toString() : "";
-                reference.child("People").child(id).setValue(new PersonModel(id, name, lastname, phone, gender))
+                if (gender.equals("Male")){
+                    img = "https://i.ibb.co/bPkhJ1Y/hombre.png";
+                } else {
+                    img = "https://i.ibb.co/qpwM05w/mujer.png";
+                }
+                reference.child("People").child(id).setValue(new PeopleModel(id, name, lastname, phone, gender, img))
                         .addOnSuccessListener(unused -> {
                             Toast.makeText(getBaseContext(), "Person Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));

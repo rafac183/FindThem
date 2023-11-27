@@ -20,29 +20,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
-import com.rafac183.findthem.model.PetModel;
-import com.rafac183.findthem.ui.registered_people.PeopleModel;
 import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PetRegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ActivityInterface {
 
     private ActivityPetRegisterBinding binding;
     private MaterialButton exit, enterData;
-    private FirebaseFirestore authStore;
     private DatabaseReference reference = null;
     String[] gender = {"Choose one", "Male", "Female"};
 
@@ -57,7 +48,6 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
         exit = binding.exit;
         enterData = binding.enterData;
         reference = FirebaseDatabase.getInstance().getReference();
-        authStore = FirebaseFirestore.getInstance();
 
         /*--------Methods--------*/
         Hilos();
@@ -99,6 +89,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
             String id = "User" + new Date().getTime();
             String name = binding.edNamePet.getText().toString().trim();
             String codeStr = binding.edCodePet.getText().toString();
+            String img;
             int code;
             if (TextUtils.isEmpty(name)) {
                 binding.edNamePet.setError("Enter a Name");
@@ -115,7 +106,12 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
                 code = Integer.parseInt(codeStr);
                 Object selectedGender = binding.spinnerGender.getSelectedItem();
                 String gender = selectedGender != null ? selectedGender.toString() : "";
-                reference.child("Pets").child(id).setValue(new PetModel(id, name, gender,code))
+                if (gender.equals("Male")){
+                    img = "https://i.ibb.co/87Vq8hB/lindo-perro-estudio-removebg-preview.png";
+                }else {
+                    img = "https://i.ibb.co/Zc7Z5zy/adorable-cachorro-estudio-removebg-preview.png";
+                }
+                reference.child("Pets").child(id).setValue(new PetsModel(id, name, gender,code, img))
                         .addOnSuccessListener(unused -> {
                             Toast.makeText(getBaseContext(), "Pet Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(PetRegisterActivity.this, NavigationActivity.class));
