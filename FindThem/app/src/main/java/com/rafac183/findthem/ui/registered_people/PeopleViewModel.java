@@ -25,6 +25,10 @@ public class PeopleViewModel extends ViewModel {
                 // Notificar a los observadores cuando los datos estén disponibles
                 peopleData.postValue(peopleList);
                 loading.postValue(false); // Indicar que la carga ha finalizado
+            }).exceptionally(throwable -> {
+                // Manejar la excepción si ocurre un error durante la obtención de datos
+                loading.postValue(false); // Indicar que la carga ha finalizado con error
+                return null;
             });
         }
     }
@@ -37,3 +41,4 @@ public class PeopleViewModel extends ViewModel {
         return loading;
     }
 }
+

@@ -59,4 +59,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     //Mapbox
     implementation("com.mapbox.maps:android:10.16.0")
+    //CompleteListener
+    implementation("com.google.guava:guava:30.1-jre")
+
 }

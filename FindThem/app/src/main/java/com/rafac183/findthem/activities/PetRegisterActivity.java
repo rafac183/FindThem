@@ -23,12 +23,18 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityPetRegisterBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
+import com.rafac183.findthem.model.PetModel;
+import com.rafac183.findthem.ui.registered_people.PeopleModel;
+import com.rafac183.findthem.ui.registered_pets.PetsModel;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +43,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
     private ActivityPetRegisterBinding binding;
     private MaterialButton exit, enterData;
     private FirebaseFirestore authStore;
+    private DatabaseReference reference = null;
     String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
@@ -49,6 +56,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
 
         exit = binding.exit;
         enterData = binding.enterData;
+        reference = FirebaseDatabase.getInstance().getReference();
         authStore = FirebaseFirestore.getInstance();
 
         /*--------Methods--------*/
@@ -88,6 +96,7 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
 
     private void Btns(){
         enterData.setOnClickListener(v -> {
+            String id = "User" + new Date().getTime();
             String name = binding.edNamePet.getText().toString().trim();
             String codeStr = binding.edCodePet.getText().toString();
             int code;
@@ -105,19 +114,17 @@ public class PetRegisterActivity extends AppCompatActivity implements AdapterVie
             } else {
                 code = Integer.parseInt(codeStr);
                 Object selectedGender = binding.spinnerGender.getSelectedItem();
-                Map<String, Object> pet = new HashMap<>();
-                pet.put("name",name);
-                pet.put("code",code);
-                pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
-                authStore.collection("pets").add(pet).addOnSuccessListener(documentReference -> {
-                    Toast.makeText(this, "Pet Created", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
-                    finish();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
-                    finish();
-                });
+                String gender = selectedGender != null ? selectedGender.toString() : "";
+                reference.child("Pets").child(id).setValue(new PetModel(id, name, gender,code))
+                        .addOnSuccessListener(unused -> {
+                            Toast.makeText(getBaseContext(), "Pet Created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(PetRegisterActivity.this, NavigationActivity.class));
+                            finish();
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(PetRegisterActivity.this, NavigationActivity.class));
+                            finish();
+                        });
             }
         });
         exit.setOnClickListener(v -> {

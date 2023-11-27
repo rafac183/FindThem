@@ -21,11 +21,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rafac183.findthem.R;
 import com.rafac183.findthem.databinding.ActivityRegisterInfoBinding;
 import com.rafac183.findthem.interfaces.ActivityInterface;
+import com.rafac183.findthem.model.PersonModel;
+import com.rafac183.findthem.model.PetModel;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +38,7 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
     private ActivityRegisterInfoBinding binding;
     private MaterialButton exit, enterData;
     private FirebaseFirestore authStore;
+    private DatabaseReference reference = null;
     String[] gender = {"Choose one", "Male", "Female"};
 
     @Override
@@ -45,6 +51,7 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
 
         exit = binding.exit;
         enterData = binding.enterData;
+        reference = FirebaseDatabase.getInstance().getReference();
         authStore = FirebaseFirestore.getInstance();
 
         /*--------Methods--------*/
@@ -84,10 +91,10 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
 
     private void Btns(){
         enterData.setOnClickListener(v -> {
+            String id = "User" + new Date().getTime();
             String name = binding.edName.getText().toString().trim();
             String lastname = binding.edLastName.getText().toString().trim();
             String phone = binding.edPhone.getText().toString().trim();
-            int code;
             if (TextUtils.isEmpty(name)) {
                 binding.edName.setError("Enter a Name");
             }
@@ -104,20 +111,17 @@ public class RegisterInfoActivity extends AppCompatActivity implements AdapterVi
                 }
             } else {
                 Object selectedGender = binding.spinnerGender.getSelectedItem();
-                Map<String, Object> pet = new HashMap<>();
-                pet.put("name",name);
-                pet.put("lastname",lastname);
-                pet.put("phone",phone);
-                pet.put("gender",selectedGender != null ? selectedGender.toString() : "");
-                authStore.collection("people").add(pet).addOnSuccessListener(documentReference -> {
-                    Toast.makeText(this, "Person Created", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
-                    finish();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), NavigationActivity.class));
-                    finish();
-                });
+                String gender = selectedGender != null ? selectedGender.toString() : "";
+                reference.child("People").child(id).setValue(new PersonModel(id, name, lastname, phone, gender))
+                        .addOnSuccessListener(unused -> {
+                            Toast.makeText(getBaseContext(), "Person Created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));
+                            finish();
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(getBaseContext(), "Error creating", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterInfoActivity.this, NavigationActivity.class));
+                            finish();
+                        });
             }
         });
         exit.setOnClickListener(v -> {
