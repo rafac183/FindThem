@@ -15,6 +15,9 @@ public class PersonModel {
         this.gender = gender;
     }
 
+    public PersonModel() {
+    }
+
     public String getId() {
         return id;
     }

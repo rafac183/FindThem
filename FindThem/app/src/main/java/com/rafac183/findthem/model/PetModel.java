@@ -13,6 +13,9 @@ public class PetModel {
         this.code = code;
     }
 
+    public PetModel() {
+    }
+
     public String getId() {
         return id;
     }
