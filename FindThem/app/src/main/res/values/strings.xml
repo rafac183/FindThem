@@ -25,6 +25,6 @@
     <string name="map_all_records">Map (All Records)</string>
     <string name="location_content_description">location</string>
     <string name="others">Others</string>
-    <string name="uploaded_images">Uploaded Images</string>
+    <string name="server_mqtt">Server Mqtt</string>
     <string name="list">List</string>
 </resources>

@@ -61,5 +61,14 @@ dependencies {
     implementation("com.mapbox.maps:android:10.16.0")
     //CompleteListener
     implementation("com.google.guava:guava:30.1-jre")
+    //Mqtt
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1"){
+        exclude("com.android.support", null)
+        exclude(null, "appcompat-v7")
+        exclude(null, "support-v4")
+    }
 }
