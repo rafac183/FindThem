@@ -5,6 +5,7 @@ import static android.graphics.Color.RED;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
+import com.rafac183.findthem.databinding.ActivityMqttBinding;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -26,6 +29,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
 public class MqttActivity extends AppCompatActivity {
+    private ActivityMqttBinding binding;
     private static final String TAG = "MyMQTTApp";
     private String clienteId="";
 
@@ -38,17 +42,19 @@ public class MqttActivity extends AppCompatActivity {
     private MqttAndroidClient cliente;
     private MqttConnectOptions opciones;
 
-
     private static String topic = "LED";
     private static String topicMsgOn = "Encender";
     private static String topicMsgOff = "Apagar";
-
     private boolean permisoPublicar;
+    private MaterialButton exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mqtt);
+        binding = ActivityMqttBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        exit = binding.exit;
 
         Button btnOn = findViewById(R.id.btnOn);
         btnOn.setOnClickListener(new View.OnClickListener() {
@@ -177,5 +183,12 @@ public class MqttActivity extends AppCompatActivity {
 
         TextView txtIdCliente = findViewById(R.id.txtIdCliente);
         txtIdCliente.setText(this.clienteId);
+    }
+
+    private void Btns(){
+        exit.setOnClickListener(v -> {
+            startActivity(new Intent(MqttActivity.this, NavigationActivity.class));
+            finish();
+        });
     }
 }
