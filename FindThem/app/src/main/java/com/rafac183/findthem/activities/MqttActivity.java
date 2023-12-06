@@ -55,6 +55,7 @@ public class MqttActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         exit = binding.exit;
+        Btns();
 
         Button btnOn = findViewById(R.id.btnOn);
         btnOn.setOnClickListener(new View.OnClickListener() {
