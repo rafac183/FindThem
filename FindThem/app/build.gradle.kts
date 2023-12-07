@@ -64,8 +64,8 @@ dependencies {
     //Mqtt
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
-
-    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
     implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1"){
         exclude("com.android.support", null)
         exclude(null, "appcompat-v7")

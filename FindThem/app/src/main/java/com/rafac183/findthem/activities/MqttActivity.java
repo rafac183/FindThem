@@ -35,9 +35,9 @@ public class MqttActivity extends AppCompatActivity {
 
     //Conexión al servidor MQTT
     //mqtt://mqtt-findthem:DUmNKLlLd4Z7O0Tc@mqtt-findthem.cloud.shiftr.io
-    private static  String mqttHost = "tcp://mqtt-findthem.cloud.shiftr.io:1883";
-    private static  String mqttUser = "mqtt-findthem";
-    private static  String mqttPass = "DUmNKLlLd4Z7O0Tc";
+    private static  String mqttHost = "tcp://find-key.cloud.shiftr.io:1883";
+    private static  String mqttUser = "find-key";
+    private static  String mqttPass = "tH6GuodkwXi0Q2F1";
 
     private MqttAndroidClient cliente;
     private MqttConnectOptions opciones;
@@ -58,20 +58,10 @@ public class MqttActivity extends AppCompatActivity {
         Btns();
 
         Button btnOn = findViewById(R.id.btnOn);
-        btnOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enviarMensaje(topic, topicMsgOn);
-            }
-        });
+        btnOn.setOnClickListener(view -> enviarMensaje(topic, topicMsgOn));
 
         Button btnOff = findViewById(R.id.btnOff);
-        btnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enviarMensaje(topic, topicMsgOff);
-            }
-        });
+        btnOff.setOnClickListener(view -> enviarMensaje(topic, topicMsgOff));
 
         getNombreCliente();
         connectBroker();
