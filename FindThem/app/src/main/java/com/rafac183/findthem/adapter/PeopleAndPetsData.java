@@ -23,7 +23,6 @@ public class PeopleAndPetsData {
     static CompletableFuture<ArrayList<PeopleModel>> futurePeople;
     static CompletableFuture<ArrayList<PetsModel>> futurePets;
     static DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-    static String imgUrl;
 
     public static CompletableFuture<ArrayList<PeopleModel>> getPeopleList() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

@@ -4,6 +4,10 @@ import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Build;
@@ -16,7 +20,13 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
+import com.rafac183.findthem.adapter.FindAdapter;
+import com.rafac183.findthem.adapter.MqttAdapter;
+import com.rafac183.findthem.adapter.MqttData;
 import com.rafac183.findthem.databinding.ActivityMqttBinding;
+import com.rafac183.findthem.interfaces.MqttInterface;
+import com.rafac183.findthem.ui.registered_people.PeopleFragment;
+import com.rafac183.findthem.ui.registered_people.PeopleModel;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -28,7 +38,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 
-public class MqttActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MqttActivity extends AppCompatActivity implements MqttInterface{
     private ActivityMqttBinding binding;
     private static final String TAG = "MyMQTTApp";
     private String clienteId="";
@@ -43,10 +55,11 @@ public class MqttActivity extends AppCompatActivity {
     private MqttConnectOptions opciones;
 
     private static String topic = "LED";
-    private static String topicMsgOn = "Encender";
-    private static String topicMsgOff = "Apagar";
+    private static String topicMsgActivate = "Activate Location";
+    private static String topicMsgDefuse = "Defuse Location";
     private boolean permisoPublicar;
     private MaterialButton exit;
+    private final MqttData mqttData = new MqttData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +70,8 @@ public class MqttActivity extends AppCompatActivity {
         exit = binding.exit;
         Btns();
 
-        Button btnOn = findViewById(R.id.btnOn);
-        btnOn.setOnClickListener(view -> enviarMensaje(topic, topicMsgOn));
-
-        Button btnOff = findViewById(R.id.btnOff);
-        btnOff.setOnClickListener(view -> enviarMensaje(topic, topicMsgOff));
-
         getNombreCliente();
+        initRecyclerView(mqttData.getPeopleList());
         connectBroker();
     }
 
@@ -146,16 +154,14 @@ public class MqttActivity extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                TextView txtInfo = findViewById(R.id.txtInfo);
+                TextView cv = findViewById(R.id.txtIdCliente);
                 if(topic.matches(topic)){
                     String msg = new String(message.getPayload());
-                    if(msg.matches(topicMsgOn)){
-                        txtInfo.setText(msg);
-                        txtInfo.setBackgroundColor(GREEN);
+                    if(msg.matches(topicMsgActivate)){
+                        cv.setBackgroundColor(GREEN);
                     }
-                    else if(msg.matches(topicMsgOff)){
-                        txtInfo.setText(msg);
-                        txtInfo.setBackgroundColor(RED);
+                    else if(msg.matches(topicMsgDefuse)){
+                        cv.setBackgroundColor(RED);
                     }
                 }
             }
@@ -181,5 +187,24 @@ public class MqttActivity extends AppCompatActivity {
             startActivity(new Intent(MqttActivity.this, NavigationActivity.class));
             finish();
         });
+    }
+
+    public void initRecyclerView(ArrayList<PeopleModel> peopleList){
+        LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerFragmentPeople.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
+        DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentPeople.getContext(), manager.getOrientation());
+        binding.recyclerFragmentPeople.setHasFixedSize(true); //Extra
+        binding.recyclerFragmentPeople.setItemAnimator(new DefaultItemAnimator());//Extra
+        binding.recyclerFragmentPeople.setLayoutManager(manager);
+        binding.recyclerFragmentPeople.setAdapter(new MqttAdapter(peopleList, MqttActivity.this));
+    }
+
+    @Override
+    public void onCLickActivate() {
+        enviarMensaje(topic, topicMsgActivate);
+    }
+
+    @Override
+    public void onCLickDefuse() {
+        enviarMensaje(topic, topicMsgDefuse);
     }
 }
