@@ -5,16 +5,19 @@ import static android.graphics.Color.RED;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +28,10 @@ import com.rafac183.findthem.adapter.MqttAdapter;
 import com.rafac183.findthem.adapter.MqttData;
 import com.rafac183.findthem.databinding.ActivityMqttBinding;
 import com.rafac183.findthem.interfaces.MqttInterface;
+import com.rafac183.findthem.model.MqttViewModel;
 import com.rafac183.findthem.ui.registered_people.PeopleFragment;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
+import com.rafac183.findthem.ui.registered_people.PeopleViewModel;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -59,19 +64,29 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
     private static String topicMsgDefuse = "Defuse Location";
     private boolean permisoPublicar;
     private MaterialButton exit;
-    private final MqttData mqttData = new MqttData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MqttViewModel mqttViewModel = new ViewModelProvider(MqttActivity.this).get(MqttViewModel.class); //esto se trae la lista
+
         super.onCreate(savedInstanceState);
         binding = ActivityMqttBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mqttViewModel.getPeopleData().observe(this, this::initRecyclerView);
+
+        mqttViewModel.isLoading().observe(this, isLoading -> {
+            if (isLoading) {
+                binding.chargingScreen.setVisibility(View.VISIBLE);
+            } else {
+                binding.chargingScreen.setVisibility(View.GONE);
+            }
+        });
 
         exit = binding.exit;
         Btns();
 
         getNombreCliente();
-        initRecyclerView(mqttData.getPeopleList());
         connectBroker();
     }
 
@@ -154,7 +169,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                TextView cv = findViewById(R.id.txtIdCliente);
+                LinearLayout cv = findViewById(R.id.LYCV);
                 if(topic.matches(topic)){
                     String msg = new String(message.getPayload());
                     if(msg.matches(topicMsgActivate)){
@@ -190,12 +205,12 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
     }
 
     public void initRecyclerView(ArrayList<PeopleModel> peopleList){
-        LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerFragmentPeople.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
-        DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerFragmentPeople.getContext(), manager.getOrientation());
-        binding.recyclerFragmentPeople.setHasFixedSize(true); //Extra
-        binding.recyclerFragmentPeople.setItemAnimator(new DefaultItemAnimator());//Extra
-        binding.recyclerFragmentPeople.setLayoutManager(manager);
-        binding.recyclerFragmentPeople.setAdapter(new MqttAdapter(peopleList, MqttActivity.this));
+        LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerMqtt.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
+        DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerMqtt.getContext(), manager.getOrientation());
+        binding.recyclerMqtt.setHasFixedSize(true); //Extra
+        binding.recyclerMqtt.setItemAnimator(new DefaultItemAnimator());//Extra
+        binding.recyclerMqtt.setLayoutManager(manager);
+        binding.recyclerMqtt.setAdapter(new MqttAdapter(peopleList, MqttActivity.this));
     }
 
     @Override

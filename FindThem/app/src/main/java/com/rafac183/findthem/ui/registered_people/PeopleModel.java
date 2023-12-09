@@ -67,5 +67,14 @@ public class PeopleModel {
     public void setImage(String image) {
         this.image = image;
     }
+    private boolean isActivated;
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
 }
 
