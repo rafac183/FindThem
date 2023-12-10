@@ -7,6 +7,7 @@ public class PeopleModel {
     private String gender;
     private String phone;
     private String image;
+    private boolean isActivated;
 
     public PeopleModel(String id, String name, String lastname, String phone, String gender, String image) {
         this.id = id;
@@ -67,7 +68,6 @@ public class PeopleModel {
     public void setImage(String image) {
         this.image = image;
     }
-    private boolean isActivated;
 
     public boolean isActivated() {
         return isActivated;

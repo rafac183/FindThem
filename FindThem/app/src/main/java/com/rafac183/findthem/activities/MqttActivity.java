@@ -47,7 +47,6 @@ import java.util.ArrayList;
 
 public class MqttActivity extends AppCompatActivity implements MqttInterface{
     private ActivityMqttBinding binding;
-    private static final String TAG = "MyMQTTApp";
     private String clienteId="";
 
     //Conexión al servidor MQTT
@@ -59,7 +58,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
     private MqttAndroidClient cliente;
     private MqttConnectOptions opciones;
 
-    private static String topic = "LED";
+    private static String topic = "LOCATION";
     private static String topicMsgActivate = "Activate Location";
     private static String topicMsgDefuse = "Defuse Location";
     private boolean permisoPublicar;
@@ -146,7 +145,6 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
             });
         } catch (MqttException e) {
             e.printStackTrace();
-            Log.e(TAG, e.getMessage());
         }
     }
 

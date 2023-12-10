@@ -27,6 +27,8 @@ public class MqttViewHolder extends RecyclerView.ViewHolder {
         binding.textViewDescription.setText(description);
         Glide.with(binding.imageViewRegistered.getContext()).load(persons.getImage()).into(binding.imageViewRegistered);
 
+        binding.LYCV.setTag(persons.getId());
+
         binding.btnActivate.setOnClickListener(v -> onClickBtns.onCLickActivate());
         binding.btnDefuse.setOnClickListener(v -> onClickBtns.onCLickDefuse());
     }

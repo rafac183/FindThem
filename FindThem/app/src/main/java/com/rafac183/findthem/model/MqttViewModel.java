@@ -18,17 +18,14 @@ public class MqttViewModel extends ViewModel {
     private final MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
     public MqttViewModel() {
-        loading.setValue(true); // Indicar que se están cargando los datos
+        loading.setValue(true);
 
-        // Obtener los datos de las personas de manera asíncrona
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             MqttData.getPeopleList().thenAccept(peopleList -> {
-                // Notificar a los observadores cuando los datos estén disponibles
                 peopleData.postValue(peopleList);
-                loading.postValue(false); // Indicar que la carga ha finalizado
+                loading.postValue(false);
             }).exceptionally(throwable -> {
-                // Manejar la excepción si ocurre un error durante la obtención de datos
-                loading.postValue(false); // Indicar que la carga ha finalizado con error
+                loading.postValue(false);
                 return null;
             });
         }
