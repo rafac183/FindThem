@@ -63,6 +63,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
     private static String topicMsgDefuse = "Defuse Location";
     private boolean permisoPublicar;
     private MaterialButton exit;
+    private ArrayList<PeopleModel> peopleList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +204,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
     }
 
     public void initRecyclerView(ArrayList<PeopleModel> peopleList){
+        this.peopleList = peopleList;
         LinearLayoutManager manager = new LinearLayoutManager(binding.recyclerMqtt.getContext()); //Con esto puedo agregar un numero de filas especificas envez de 1
         DividerItemDecoration decoration = new DividerItemDecoration(binding.recyclerMqtt.getContext(), manager.getOrientation());
         binding.recyclerMqtt.setHasFixedSize(true); //Extra
