@@ -4,34 +4,26 @@ import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.rafac183.findthem.R;
-import com.rafac183.findthem.adapter.FindAdapter;
 import com.rafac183.findthem.adapter.MqttAdapter;
-import com.rafac183.findthem.adapter.MqttData;
 import com.rafac183.findthem.databinding.ActivityMqttBinding;
 import com.rafac183.findthem.interfaces.MqttInterface;
 import com.rafac183.findthem.model.MqttViewModel;
-import com.rafac183.findthem.ui.registered_people.PeopleFragment;
 import com.rafac183.findthem.ui.registered_people.PeopleModel;
-import com.rafac183.findthem.ui.registered_people.PeopleViewModel;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -112,17 +104,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
         }
 
     }
-
-    // Dentro de tu clase MainActivity
     private void connectBroker() {
-        try {
-            new Thread(this::doConnectBroker).start();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void doConnectBroker() {
         this.cliente = new MqttAndroidClient(this.getApplicationContext(), mqttHost, this.clienteId);
         this.opciones = new MqttConnectOptions();
         this.opciones.setUserName(mqttUser);
@@ -187,6 +169,7 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
         });
     }
 
+
     private void getNombreCliente(){
         String manufacturer = Build.MANUFACTURER;
         String modelName = Build.MODEL;
@@ -210,9 +193,9 @@ public class MqttActivity extends AppCompatActivity implements MqttInterface{
         binding.recyclerMqtt.setHasFixedSize(true); //Extra
         binding.recyclerMqtt.setItemAnimator(new DefaultItemAnimator());//Extra
         binding.recyclerMqtt.setLayoutManager(manager);
-        binding.recyclerMqtt.setAdapter(new MqttAdapter(peopleList, MqttActivity.this));
+        MqttAdapter mqttAdapter = new MqttAdapter(peopleList, MqttActivity.this);
+        binding.recyclerMqtt.setAdapter(mqttAdapter);
     }
-
     @Override
     public void onCLickActivate() {
         enviarMensaje(topic, topicMsgActivate);
