@@ -11,8 +11,8 @@ android {
         applicationId = "com.rafac183.findthem"
         minSdk = 23
         targetSdk = 33
-        versionCode = 6
-        versionName = "1.5.1"
+        versionCode = 7
+        versionName = "2.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
